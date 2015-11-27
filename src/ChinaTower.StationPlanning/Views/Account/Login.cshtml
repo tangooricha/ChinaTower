@@ -1,0 +1,27 @@
+﻿@{ 
+    Layout = null;
+    ViewBag.Title = "登录 - 中国铁塔基站规划系统";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>@ViewBag.Title</title>
+    <link href="~/styles/login.css" rel="stylesheet" />
+</head>
+<body>
+    <div id="loginform">
+        <div id="chinatower"><div id="connect">中国铁塔</div></div>
+        <div id="mainlogin">
+            <div id="or"></div>
+            <h1>Log in with awesome new thing</h1>
+            <form action="#">
+                <input type="text" placeholder="username or email" value="" required>
+                <input type="password" placeholder="password" value="" required>
+                <button type="submit"><i class="fa fa-arrow-right"></i></button>
+            </form>
+            <div id="note"><a href="#">Forgot your password?</a></div>
+        </div>
+    </div>
+</body>
+</html>

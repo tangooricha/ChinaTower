@@ -34,7 +34,7 @@ namespace ChinaTower.StationPlanning
             #endregion
         }
 
-        public void Configure(IApplicationBuilder app, ILoggerFactory logger)
+        public async void Configure(IApplicationBuilder app, ILoggerFactory logger)
         {
             #region Setting loggers
             logger.MinimumLevel = LogLevel.Warning;
@@ -48,6 +48,10 @@ namespace ChinaTower.StationPlanning
             app.UseIdentity();
             app.UseAutoAjax();
             app.UseMvcWithDefaultRoute();
+            #endregion
+
+            #region Init database
+            await SampleData.InitDB(app.ApplicationServices);
             #endregion
         }
 

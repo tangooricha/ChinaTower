@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNet.Builder;
+﻿using Microsoft.AspNet.Builder;
 using Microsoft.AspNet.Hosting;
-using Microsoft.AspNet.Http;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Data.Entity;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.PlatformAbstractions;
 using ChinaTower.StationPlanning.Models;
 
@@ -30,6 +26,7 @@ namespace ChinaTower.StationPlanning
             #endregion
 
             #region Adding Others
+            services.AddMvc();
             services.AddSmartCookies();
             services.AddSmartUser<User, string>();
             services.AddAesCrypto();
@@ -37,10 +34,17 @@ namespace ChinaTower.StationPlanning
             #endregion
         }
 
-        public void Configure(IApplicationBuilder app)
+        public void Configure(IApplicationBuilder app, ILoggerFactory logger)
         {
+            #region Setting loggers
+            logger.MinimumLevel = LogLevel.Warning;
+            logger.AddConsole();
+            logger.AddDebug();
+            #endregion
+
             #region Using middlewares
             app.UseIISPlatformHandler();
+            app.UseStaticFiles();
             app.UseIdentity();
             app.UseAutoAjax();
             app.UseMvcWithDefaultRoute();

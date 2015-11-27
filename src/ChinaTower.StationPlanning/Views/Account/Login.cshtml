@@ -8,20 +8,24 @@
 <head>
     <title>@ViewBag.Title</title>
     <link href="~/styles/login.css" rel="stylesheet" />
+    <link href="~/styles/font-awesome.min.css" rel="stylesheet" />
 </head>
 <body>
-    <div id="loginform">
-        <div id="chinatower"><div id="connect">中国铁塔</div></div>
+    <form id="loginform" asp-action="Login" asp-controller="Account" method="post">
+        <div id="chinatower"><img class="logo logo-chinatower" src="~/images/logo-login.png" /><div id="connect">中国铁塔基站规划系统</div></div>
         <div id="mainlogin">
             <div id="or"></div>
-            <h1>Log in with awesome new thing</h1>
-            <form action="#">
-                <input type="text" placeholder="username or email" value="" required>
-                <input type="password" placeholder="password" value="" required>
+            <h1>登录中国铁塔基站规划系统</h1>
+            <div>
+                <input type="text" placeholder="用户名" value="" required>
+                <input type="password" placeholder="密码" value="" required>
                 <button type="submit"><i class="fa fa-arrow-right"></i></button>
-            </form>
-            <div id="note"><a href="#">Forgot your password?</a></div>
+            </div>
+            <div id="note">
+                <input name="remember" style="width:13px;display:inline;" type="checkbox" value="true" />
+                记住密码
+            </div>
         </div>
-    </div>
+    </form>
 </body>
 </html>

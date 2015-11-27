@@ -11,6 +11,6 @@ namespace ChinaTower.StationPlanning.Controllers
         public AesCrypto Aes { get; set; }
 
         [FromServices]
-        public SmtpEmailSender Mail { get; set; }
+        public IEmailSender Mail { get; set; }
     }
 }

@@ -16,7 +16,6 @@ namespace ChinaTower.StationPlanning.Controllers
     public class AccountController : BaseController
     {
         [HttpGet]
-        [GuestOnly]
         public IActionResult Login()
         {
             return View();
@@ -24,7 +23,6 @@ namespace ChinaTower.StationPlanning.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [GuestOnly]
         public async Task<IActionResult> Login(string username, string password, bool remember, [FromHeader] string Referer)
         {
             var result = await SignInManager.PasswordSignInAsync(username, password, remember, false);

@@ -20,7 +20,15 @@ namespace ChinaTower.StationPlanning
             #endregion
 
             #region Adding Identity v3
-            services.AddIdentity<User, IdentityRole>()
+            services.AddIdentity<User, IdentityRole>(x => 
+            {
+                x.Password.RequireDigit = false;
+                x.Password.RequiredLength = 0;
+                x.Password.RequireLowercase = false;
+                x.Password.RequireNonLetterOrDigit = false;
+                x.Password.RequireUppercase = false;
+                x.User.AllowedUserNameCharacters = null;
+            })
                 .AddEntityFrameworkStores<ChinaTowerContext>()
                 .AddDefaultTokenProviders();
             #endregion

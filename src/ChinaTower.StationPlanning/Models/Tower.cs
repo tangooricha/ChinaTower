@@ -39,5 +39,7 @@ namespace ChinaTower.StationPlanning.Models
         public Guid BlobId { get; set; }
 
         public Blob Image { get; set; }
+
+        public DateTime Time { get; set; }
     }
 }

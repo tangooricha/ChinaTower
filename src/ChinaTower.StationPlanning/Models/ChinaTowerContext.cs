@@ -41,6 +41,7 @@ namespace ChinaTower.StationPlanning.Models
                 e.HasIndex(x => x.Name);
                 e.HasIndex(x => x.Address);
                 e.HasIndex(x => x.Provider);
+                e.HasIndex(x => x.Time);
             });
         }
     }

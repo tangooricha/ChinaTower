@@ -6,7 +6,7 @@
     <meta name="description" content="mobile first, app, web app, responsive, admin dashboard, flat, flat ui">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <link rel="stylesheet" href="~/styles/bootstrap.css">
-    <link rel="stylesheet" href="~/styles/font-awesome.min.css">
+    <link href="~/styles/font-awesome.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="~/styles/style.css">
     <link rel="stylesheet" href="~/styles/plugin.css">
     <link rel="stylesheet" href="~/styles/landing.css">
@@ -22,7 +22,7 @@
             <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                     <span class="hidden-sm-only">Mika Sokeil</span>
-                    <span class="thumb-small avatar inline"><img src="images/avatar.jpg" alt="Mika Sokeil" class="img-circle"></span>
+                    <span class="thumb-small avatar inline"><img src="@Url.Action("Avatar", "Account", new { id = User.Current.Id })" alt="Mika Sokeil" class="img-circle"></span>
                     <b class="caret hidden-sm-only"></b>
                 </a>
                 <ul class="dropdown-menu">
@@ -35,43 +35,14 @@
                 </ul>
             </li>
         </ul>
-        <a class="navbar-brand" href="#">first</a>
+        <a class="navbar-brand" href="#"><img src="~/images/logo.png" /></a>
         <button type="button" class="btn btn-link pull-left nav-toggle hidden-lg" data-toggle="class:slide-nav slide-nav-left" data-target="body">
-            <i class="icon-reorder icon-xlarge text-default"></i>
+            <i class="fa-reorder fa fa-lg text-default"></i>
         </button>
         <ul class="nav navbar-nav hidden-sm">
-            <li>
-                <div class="m-t m-b-small" id="panel-notifications">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-comment-alt icon-xlarge text-default"></i><b class="badge badge-notes bg-danger count-n">2</b></a>
-                    <section class="dropdown-menu m-l-small m-t-mini">
-                        <section class="panel panel-large arrow arrow-top">
-                            <header class="panel-heading bg-white"><span class="h5"><strong>You have <span class="count-n">2</span> notifications</strong></span></header>
-                            <div class="list-group list-group-flush m-t-n">
-                                <a href="#" class="media list-group-item">
-                                    <span class="pull-left thumb-small"><img src="images/avatar.jpg" alt="John said" class="img-circle"></span>
-                                    <span class="media-body block m-b-none">
-                                        Moved to Bootstrap 3.0<br>
-                                        <small class="text-muted">23 June 13</small>
-                                    </span>
-                                </a>
-                                <a href="#" class="media list-group-item">
-                                    <span class="media-body block m-b-none">
-                                        first v.1 (Bootstrap 2.3 based) released<br>
-                                        <small class="text-muted">19 June 13</small>
-                                    </span>
-                                </a>
-                            </div>
-                            <footer class="panel-footer text-small">
-                                <a href="#" class="pull-right"><i class="icon-cog"></i></a>
-                                <a href="#">See all the notifications</a>
-                            </footer>
-                        </section>
-                    </section>
-                </div>
-            </li>
-            <li><div class="m-t-small"><a class="btn btn-small btn-info" data-toggle="modal" href="#modal"><i class="icon-plus"></i> POST</a></div></li>
+            <li><div class="m-t-small"><a class="btn btn-small btn-info" data-toggle="modal" href="#modal"><i class="fa fa-plus"></i> POST</a></div></li>
             <li class="dropdown shift" data-toggle="shift:appendTo" data-target=".nav-primary .nav">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-cog icon-xlarge visible-sm visible-sm-inline"></i>Settings <b class="caret hidden-sm-only"></b></a>
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa-cog fa fa-lg visible-sm visible-sm-inline"></i>Settings <b class="caret hidden-sm-only"></b></a>
                 <ul class="dropdown-menu">
                     <li>
                         <a href="#" data-toggle="class:navbar-fixed" data-target='body'>
@@ -107,7 +78,7 @@
             </li>
         </ul>
         <form class="navbar-form pull-left shift" action="" data-toggle="shift:appendTo" data-target=".nav-primary">
-            <i class="icon-search text-muted"></i>
+            <i class="fa fa-search text-muted"></i>
             <input type="text" class="input-small form-control" placeholder="Search">
         </form>
     </header>
@@ -115,34 +86,22 @@
     <!-- nav -->
     <nav id="nav" class="nav-primary visible-lg nav-vertical">
         <ul class="nav" data-spy="affix" data-offset-top="50">
-            <li class="active"><a href="index.html"><i class="icon-dashboard icon-xlarge"></i>Dashboard</a></li>
+            <li class="active"><a asp-action="Index" asp-controller="Home"><i class="fa-dashboard fa fa-lg"></i>概况</a></li>
+            <li><a asp-action="Index" asp-controller="Map"><i class="fa-map-o fa fa-lg"></i>地图展示</a></li>
             <li class="dropdown-submenu">
-                <a href="#"><i class="icon-th icon-xlarge"></i>Elements</a>
+                <a href="#"><i class="fa-map-signs fa fa-lg"></i>铁塔管理</a>
                 <ul class="dropdown-menu">
-                    <li><a href="buttons.html">Buttons</a></li>
-                    <li><a href="icons.html"><b class="badge pull-right">302</b>Icons</a></li>
-                    <li><a href="grid.html">Grid</a></li>
-                    <li><a href="widgets.html"><b class="badge bg-primary pull-right">8</b>Widgets</a></li>
-                    <li><a href="components.html"><b class="badge pull-right">18</b>Components</a></li>
+                    <li><a href="buttons.html">整合分析</a></li>
+                    <li><a href="icons.html"><b class="badge pull-right">302</b>新建分析</a></li>
+                    <li><a href="grid.html">主动规划</a></li>
+                    <li><a href="widgets.html"><b class="badge bg-primary pull-right">8</b>关联性分析</a></li>
                 </ul>
             </li>
-            <li class="dropdown-submenu">
-                <a href="#"><i class="icon-list icon-xlarge"></i>Lists</a>
-                <ul class="dropdown-menu">
-                    <li><a href="list.html">List groups</a></li>
-                    <li><a href="table.html">Table</a></li>
-                </ul>
-            </li>
-            <li><a href="form.html"><i class="icon-edit icon-xlarge"></i>Form</a></li>
-            <li><a href="chart.html"><i class="icon-signal icon-xlarge"></i>Chart</a></li>
-            <li class="dropdown-submenu">
-                <a href="#"><i class="icon-link icon-xlarge"></i>Others</a>
-                <ul class="dropdown-menu">
-                    <li><a href="signin.html">Signin page</a></li>
-                    <li><a href="signup.html">Signup page</a></li>
-                    <li><a href="404.html">404 page</a></li>
-                </ul>
-            </li>
+            <li><a asp-action="Index" asp-controller="Plan"><i class="fa-map-marker fa fa-lg"></i>规划分析</a></li>
+            <li><a asp-action="Index" asp-controller="Pavement"><i class="fa-car fa fa-lg"></i>路测分析</a></li>
+            <li><a asp-action="Index" asp-controller="Pano"><i class="fa-camera fa fa-lg"></i>实景勘察</a></li>
+            <li><a asp-action="Index" asp-controller="Account"><i class="fa-users fa fa-lg"></i>用户管理</a></li>
+            <li><a asp-action="Index" asp-controller="Setting"><i class="fa-cog fa fa-lg"></i>系统管理</a></li>
         </ul>
     </nav>
     <!-- / nav -->
@@ -157,7 +116,7 @@
             <div class="modal-dialog pos-abt" style="margin-top:-235px; top:50%">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="icon-remove"></i></button>
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="fa-remove"></i></button>
                         <h4 class="modal-title" id="myModalLabel">Post your first idea</h4>
                     </div>
                     <div class="modal-body">
@@ -188,10 +147,7 @@
     <footer id="footer">
         <div class="text-center padder clearfix">
             <p>
-                <small>&copy; first 2013, Mobile first web app framework base on Bootstrap</small><br><br>
-                <a href="#" class="btn btn-mini btn-circle btn-twitter"><i class="icon-twitter"></i></a>
-                <a href="#" class="btn btn-mini btn-circle btn-facebook"><i class="icon-facebook"></i></a>
-                <a href="#" class="btn btn-mini btn-circle btn-gplus"><i class="icon-google-plus"></i></a>
+                <small>&copy; 2015 <a href="http://www.codecomb.com">Harbin Code Comb Technology</a>. All right Reserved.</small><br><br>
             </p>
         </div>
     </footer>

@@ -3,7 +3,7 @@
 html{background-color: #f5f6f7;position: relative;min-height: 100%;overflow-x:hidden;}
 body{background-color: transparent;color:#656565;font-size:13px;overflow-x: hidden;}
 body, h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
-  font-family:'Open Sans',"HelveticaNeue", "Helvetica Neue", Helvetica, Arial,sans-serif;
+  font-family:'Microsoft YaHei','Open Sans',"HelveticaNeue", "Helvetica Neue", Helvetica, Arial,sans-serif;
 }
 a{color:#3a5a7a}
 a:hover, a:focus{text-decoration:none;}
@@ -369,9 +369,9 @@ input[type="text"], select, textarea{min-width: 40px;height: auto;}
 /* Header */
 .navbar{border-bottom: 1px solid #d1d4d7;box-shadow:0 0 5px rgba(0,0,0,.1);z-index: 1010;border-radius: 0;padding:0;margin-bottom: 0}
 .navbar.bg{border-bottom: 1px solid #162636;}
-.navbar-brand{font-size: 28px;min-width:90px;font-family: "Times New Roman", Georgia, serif;font-style: italic;font-weight: 700;padding: 12px 0 18px 0}
-.navbar-brand img{max-height: 50px}
-.navbar-brand, .navbar-brand:hover, .navbar-brand:focus{color: #22baa0;}
+.navbar-brand{height:51px;width:90px;padding:0}
+.navbar-brand img{height: 31px; width: 89px;margin:10px 0;}
+.navbar-brand, .navbar-brand:hover, .navbar-brand:focus{color: #b94547;}
 .navbar-form{position: relative;margin: 10px}
 .navbar-form input[type="text"]{border-radius: 17px;font-weight: 700;text-indent: 1.5em;}
 .navbar-form i{position: absolute;z-index: 1;left:.6em;top: 50%;margin-top: -8px;color: #bbb}

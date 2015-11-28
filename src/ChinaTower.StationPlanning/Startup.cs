@@ -39,6 +39,7 @@ namespace ChinaTower.StationPlanning
             services.AddSmartUser<User, string>();
             services.AddAesCrypto();
             services.AddSmtpEmailSender("smtp.ym.163.com", 25, "中国铁塔", "noreply@vnextcn.org", "noreply@vnextcn.org", "123456");
+            services.AddWgsDis();
             #endregion
         }
 

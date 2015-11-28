@@ -27,7 +27,7 @@ namespace ChinaTower.StationPlanning.Controllers
         {
             var result = await SignInManager.PasswordSignInAsync(username, password, remember, false);
             if (result.Succeeded)
-                return Redirect(Referer ?? Url.Action("Index", "Home"));
+                return Redirect(Referer == null || Referer.IndexOf("Account") > 0 ? Url.Action("Index", "Home") : Referer);
             else
                 return Prompt(x =>
                 {

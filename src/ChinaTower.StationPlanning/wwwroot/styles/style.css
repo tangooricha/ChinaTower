@@ -582,3 +582,11 @@ input[type="text"], select, textarea{min-width: 40px;height: auto;}
   .toolbar a{width:25%;float: left;margin-bottom: 10px}
   .toolbar a:nth-child(5n){clear: left}
 }
+
+#btn-nav {
+    height: 51px;
+}
+
+#frmLogout {
+    display: none;
+}

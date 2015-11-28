@@ -19,5 +19,7 @@ namespace ChinaTower.StationPlanning.Models
 
         [MaxLength(32)]
         public string City { get; set; }
+
+        public SignalColor Color { get; set; }
     }
 }

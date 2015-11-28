@@ -41,5 +41,7 @@ namespace ChinaTower.StationPlanning.Models
         public Blob Image { get; set; }
 
         public DateTime Time { get; set; }
+
+        public double Height { get; set; }
     }
 }

@@ -10,6 +10,16 @@
     <link rel="stylesheet" href="~/styles/style.css">
     <link rel="stylesheet" href="~/styles/plugin.css">
     <link rel="stylesheet" href="~/styles/landing.css">
+    <script src="~/scripts/jquery.min.js"></script>
+    <script src="~/scripts/bootstrap.js"></script>
+    <script src="~/scripts/app.js"></script>
+    <script src="~/scripts/app.plugin.js"></script>
+    <script src="~/scripts/app.data.js"></script>
+    <script src="~/scripts/charts/sparkline/jquery.sparkline.min.js"></script>
+    <script src="~/scripts/charts/easypiechart/jquery.easy-pie-chart.js"></script>
+    <script src="~/scripts/ie/excanvas.js"></script>
+    <script src="~/scripts/jquery.autoajax.js"></script>
+
     <!--[if lt IE 9]>
       <script src="~/scripts/ie/respond.min.js"></script>
       <script src="~/scripts/ie/html5.js"></script>
@@ -45,8 +55,9 @@
         <ul class="nav" data-spy="affix" data-offset-top="50">
             <li class="active"><a asp-action="Index" asp-controller="Home"><i class="fa-dashboard fa fa-lg"></i>概况</a></li>
             <li><a asp-action="Index" asp-controller="Map"><i class="fa-map-o fa fa-lg"></i>地图展示</a></li>
+            <li><a asp-action="Index" asp-controller="Tower"><i class="fa-map-signs fa fa-lg"></i>铁塔管理</a></li>
             <li class="dropdown-submenu">
-                <a href="#"><i class="fa-map-signs fa fa-lg"></i>铁塔管理</a>
+                <a href="#"><i class="fa-map-marker fa fa-lg"></i>规划分析</a>
                 <ul class="dropdown-menu">
                     <li><a href="buttons.html">整合分析</a></li>
                     <li><a href="icons.html"><b class="badge pull-right">302</b>新建分析</a></li>
@@ -54,7 +65,6 @@
                     <li><a href="widgets.html"><b class="badge bg-primary pull-right">8</b>关联性分析</a></li>
                 </ul>
             </li>
-            <li><a asp-action="Index" asp-controller="Plan"><i class="fa-map-marker fa fa-lg"></i>规划分析</a></li>
             <li><a asp-action="Index" asp-controller="Pavement"><i class="fa-car fa fa-lg"></i>路测分析</a></li>
             <li><a asp-action="Index" asp-controller="Pano"><i class="fa-camera fa fa-lg"></i>实景勘察</a></li>
             <li><a asp-action="Index" asp-controller="Account"><i class="fa-users fa fa-lg"></i>用户管理</a></li>
@@ -110,18 +120,5 @@
     </footer>
     <a href="#" class="hide slide-nav-block" data-toggle="class:slide-nav slide-nav-left" data-target="body"></a>
     <!-- / footer -->
-    <script src="~/scripts/jquery.min.js"></script>
-    <!-- Bootstrap -->
-    <script src="~/scripts/bootstrap.js"></script>
-    <!-- app -->
-    <script src="~/scripts/app.js"></script>
-    <script src="~/scripts/app.plugin.js"></script>
-    <script src="~/scripts/app.data.js"></script>
-
-    <!-- Sparkline Chart -->
-    <script src="~/scripts/charts/sparkline/jquery.sparkline.min.js"></script>
-    <!-- Easy Pie Chart -->
-    <script src="~/scripts/charts/easypiechart/jquery.easy-pie-chart.js"></script>
-    <script src="~/scripts/ie/excanvas.js"></script>
 </body>
 </html>

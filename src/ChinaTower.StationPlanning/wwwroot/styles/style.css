@@ -590,3 +590,63 @@ input[type="text"], select, textarea{min-width: 40px;height: auto;}
 #frmLogout {
     display: none;
 }
+
+.content-wrap {
+    margin-top: 40px;
+}
+
+.td-gray {
+    background-color: #eee;
+}
+
+.edit-tower, .create-user {
+    width: 100%;
+}
+
+.edit-tower td, .create-user td {
+    padding: 5px;
+    border: 1px solid #ccc;
+    margin-top: 0;
+}
+
+.tower-pano-item {
+    background-color: #fff;
+    box-shadow: 0 0 15px rgba(0,0,0,0.2);
+    width: 180px;
+    height: 230px;
+    padding: 10px;
+    margin: 10px;
+    text-align: center;
+    overflow: hidden;
+    float: left;
+    transition: box-shadow 0.2s linear;
+}
+
+.tower-pano-item:hover {
+    box-shadow: 0 0 15px rgb(255, 224, 59);
+}
+
+.tower-pano-icon {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    margin-top: 10px;
+}
+
+.clear {
+    clear: both;
+}
+
+.nav-chk {
+    margin-top: 5px;
+    padding-left: 12px;
+    height: 25px;
+}
+
+.left {
+    float: left;
+}
+
+.nav-chk input[type="checkbox"] {
+    margin-top: -2px;
+}

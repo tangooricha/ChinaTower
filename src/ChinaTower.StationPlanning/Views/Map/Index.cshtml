@@ -1,0 +1,429 @@
+﻿@{
+    ViewBag.Title = "地图展示";
+}
+<style>
+    body, html, #allmap {
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        margin: 0;
+        font-family: "微软雅黑";
+    }
+
+    body {
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+
+    #graphic {
+        width: 120px;
+        position: absolute;
+        bottom: 20px;
+        right: 20px;
+        background-color: #fff;
+        border: 1px solid #ccc;
+        padding: 10px;
+    }
+
+    #tower {
+        position: absolute;
+        background-color: #fff;
+        border: 1px solid #ccc;
+        padding: 10px;
+        display: none;
+    }
+
+        #tower td {
+            padding: 5px;
+            border: 1px solid #ccc;
+        }
+
+        #tower img {
+            max-width: 220px;
+            max-height: 100px;
+        }
+
+    #buttons {
+        bottom: 15px;
+        margin-left: 15px;
+        position: absolute;
+    }
+
+    @@media(max-width: 979px) {
+        .navbar {
+            padding: 0 20px !important;
+        }
+
+        #allmap {
+            margin-top: -20px !important;
+        }
+    }
+
+    #allmap {
+        height: 100%;
+    }
+</style>
+<script src="~/scripts/converter.min.js"></script>
+<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=g6DcirKK7FlGGGoiLwslU9kL"></script>
+<script type="text/javascript" src="http://api.map.baidu.com/library/DistanceTool/1.2/src/DistanceTool_min.js"></script>
+<div id="modalEditTower" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form action="/tower/create" method="post" enctype="multipart/form-data">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h3>创建铁塔</h3>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" name="id" id="TowerID" />
+                    <table class="edit-tower">
+                        <tr>
+                            <td class="td-gray">铁塔名称</td>
+                            <td><input type="text" name="name" id="txtName" placeholder="铁塔名称" class="form-control" /></td>
+                        </tr>
+                        <tr>
+                            <td class="td-gray">城市</td>
+                            <td><input type="text" name="city" id="txtCity" placeholder="城市" class="form-control" /></td>
+                        </tr>
+                        <tr>
+                            <td class="td-gray">所属地区</td>
+                            <td><input type="text" name="district" id="txtDistrict" placeholder="所属地区" class="form-control" /></td>
+                        </tr>
+                        <tr>
+                            <td class="td-gray">运营商</td>
+                            <td>
+                                <select id="lstEditProviders" name="provider" class="form-control">
+                                    <!option value="China Mobile">中国移动<!/option>
+                                    <!option value="China Telecom">中国电信<!/option>
+                                    <!option value="China Unicom">中国联通<!/option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="td-gray">场景</td>
+                            <td>
+                                <select id="lstEditScene" name="scene" class="form-control">
+                                    <!option selected>郊区<!/option>
+                                    <!option>密集城区<!/option>
+                                    <!option>农村<!/option>
+                                    <!option>一般城区<!/option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="td-gray">塔型</td>
+                            <td>
+                                <select id="lstEditTypes" name="type" class="form-control">
+                                    <!option value="B">B<!/option>
+                                    <!option value="T">T<!/option>
+                                    <!option value="Z">Z<!/option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="td-gray">塔高</td>
+                            <td><input name="height" type="text" id="txtHeight" placeholder="塔高" class="form-control" /></td>
+                        </tr>
+                        <tr>
+                            <td class="td-gray">经度</td>
+                            <td><input name="lon" type="text" id="txtLon" placeholder="经度" class="form-control" /></td>
+                        </tr>
+                        <tr>
+                            <td class="td-gray">纬度</td>
+                            <td><input name="lat" type="text" id="txtLat" placeholder="纬度" class="form-control" /></td>
+                        </tr>
+                        <tr>
+                            <td class="td-gray">详细地址</td>
+                            <td><input name="address" type="text" id="txtAddress" placeholder="详细地址" class="form-control" /></td>
+                        </tr>
+                        <tr>
+                            <td class="td-gray">链接URL</td>
+                            <td><input name="url" type="text" id="txtURL" placeholder="链接URL" class="form-control" /></td>
+                        </tr>
+                        <tr>
+                            <td class="td-gray">铁塔照片</td>
+                            <td>
+                                <p><input name="file" type="file" /></p>
+                                <p><img id="imgTower" style="max-width: 100%; max-height: 200px" /></p>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary">保存</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div id="allmap"></div>
+<div id="buttons">
+    <p>
+        <small style="color:gray">路测信号</small>
+        <select id="lstYears" style="width:80px">
+            @for (var i = 2015; i <= 2099; i++)
+            {
+                <!option value="@i" @(DateTime.Now.Year == i ? "selected" : "") >@i 年</!option>
+            }
+        </select>
+        <select id="lstMonths" style="width:60px">
+            @for (var i = 1; i <= 12; i++)
+            {
+                <!option value="@i" @(DateTime.Now.Month == i ? "selected" : "") >@i 月</!option>
+            }
+        </select>
+    </p>
+    <p>
+        <a class="btn btn-success" href="javascript:myDis.open();">测距</a>
+        <a class="btn btn-info" href="javascript:gps();">GPS定位添加铁塔</a>
+        <small style="color:gray">在地图上点击右键添加铁塔</small>
+    </p>
+</div>
+<div id="graphic">
+    <p style="color: green">
+        ● -65 至 0
+    </p>
+    <p style="color: #c0c000">
+        ● -75 至 -65
+    </p>
+    <p style="color: red">
+        ● -140 至 -75
+    </p>
+</div>
+<div id="tower">
+    <p>
+        <img id="tower-picture" src="" />
+    </p>
+    <table>
+        <tr>
+            <td class="td-gray">铁塔名称</td>
+            <td id="tower-name"></td>
+        </tr>
+        <tr>
+            <td class="td-gray">属性</td>
+            <td id="tower-status"></td>
+        </tr>
+        <tr>
+            <td class="td-gray">所属地区</td>
+            <td id="tower-district"></td>
+        </tr>
+        <tr>
+            <td class="td-gray">运营商</td>
+            <td id="tower-provider"></td>
+        </tr>
+        <tr>
+            <td class="td-gray">类型</td>
+            <td id="tower-type"></td>
+        </tr>
+        <tr>
+            <td class="td-gray">高度</td>
+            <td id="tower-height"></td>
+        </tr>
+    </table>
+</div>
+<script>
+            $(window).resize(function () { resize() });
+            $(document).ready(function(){ resize() });
+
+            function resize()
+            {
+                $('#allmap').height($(window).height() - 50);
+                $('#buttons').css('left', $('#allmap').position().x + "px");
+            }
+
+            $('#lstYears').change(function () {
+                BuildOverlays();
+            });
+            $('#lstMonths').change(function () {
+                BuildOverlays();
+            });
+            var lock = false;
+            var map = new BMap.Map("allmap");
+            var myDis = new BMapLib.DistanceTool(map);
+            var icons = {};
+            var init = false;
+            if (!init) {
+                init = true;
+                if (@(Context.Request.Query.ContainsKey("lon") ? "true" : "false")) {
+                    $.getJSON('/tower/initPosition', {}, function (ret) {
+                        map.centerAndZoom(new BMap.Point(ret.lon, ret.lat), 17);
+                });
+            }
+            }
+            icons['China Mobile'] = {};
+            icons['China Mobile']['B'] = new BMap.Icon("/images/cm-b.png", new BMap.Size(30, 30));
+            icons['China Mobile']['T'] = new BMap.Icon("/images/cm-t.png", new BMap.Size(30, 30));
+            icons['China Mobile']['Z'] = new BMap.Icon("/images/cm-z.png", new BMap.Size(30, 30));
+            icons['China Telecom'] = {};
+            icons['China Telecom']['B'] = new BMap.Icon("/images/ct-b.png", new BMap.Size(30, 30));
+            icons['China Telecom']['T'] = new BMap.Icon("/images/ct-t.png", new BMap.Size(30, 30));
+            icons['China Telecom']['Z'] = new BMap.Icon("/images/ct-z.png", new BMap.Size(30, 30));
+            icons['China Unicom'] = {};
+            icons['China Unicom']['B'] = new BMap.Icon("/images/cu-b.png", new BMap.Size(30, 30));
+            icons['China Unicom']['T'] = new BMap.Icon("/images/cu-t.png", new BMap.Size(30, 30));
+            icons['China Unicom']['Z'] = new BMap.Icon("/images/cu-z.png", new BMap.Size(30, 30));
+
+            map.addControl(new BMap.MapTypeControl());
+            map.enableScrollWheelZoom(true);
+            map.addEventListener("rightclick", function(e){
+                var point = {lng:e.point.lng,lat:e.point.lat};
+                var result = GPS.bd_to_wgs(point.lat, point.lng);
+                $('#txtLon').val(result.lon);
+                $('#txtLat').val(result.lat);
+                $('#modalEditTower').modal('show');
+            });
+            if (@(Context.Request.Query.ContainsKey("lon") ? "true" : "false")) {
+                var center = GPS.wgs_to_bd('<%= req.query.lat %>', '<%= req.query.lon %>');
+            map.centerAndZoom(new BMap.Point(center.lon, center.lat), 17);
+            }
+
+            map.addEventListener("dragend", function () {
+                BuildOverlays();
+            });
+            map.addEventListener("zoomend", function ()  {
+                BuildOverlays();
+            });
+            BuildOverlays();
+            function BuildOverlays()
+            {
+                if (lock) return;
+                lock = true;
+                map.clearOverlays();
+                var cp = map.getBounds(); //返回map可视区域，以地理坐标表示
+                var sw = cp.getSouthWest(); //返回矩形区域的西南角
+                var ne = cp.getNorthEast(); //返回矩形区域的东北角
+                var tmp1 = GPS.bd_to_wgs(sw.lat, sw.lng);
+                var tmp2 = GPS.bd_to_wgs(ne.lat, ne.lng);
+                var left = tmp1.lon;
+                var right = tmp2.lon;
+                var top = tmp2.lat;
+                var bottom = tmp1.lat;
+                $.getJSON('/tower/positions', { series: series, left: left, right: right, top: top, bottom: bottom }, function (towers) {
+                    lock = false;
+                    for (var i = 0; i < towers.length; i ++)
+                    {
+                        if (!($('#chkNormal').is(':checked') && towers[i].status == '正常' || $('#chkHard').is(':checked') && towers[i].status == '难点' || $('#chkStock').is(':checked') && towers[i].status == '储备' || $('#chkPlan').is(':checked') && towers[i].name && towers[i].status == '预选' || $('#chkSuggest').is(':checked') && !towers[i].name && towers[i].status == '预选'))
+                            continue;
+                        if (!(!towers[i].name || $('#chkCT').is(':checked') && towers[i].provider == 'China Telecom' || $('#chkCU').is(':checked') && towers[i].provider == 'China Unicom' || $('#chkCM').is(':checked') && towers[i].provider == 'China Mobile'))
+                            continue;
+                        var pos = GPS.wgs_to_bd(towers[i].lat, towers[i].lon);
+                        var pt = new BMap.Point(pos.lon, pos.lat);
+
+                        var circle;
+                        if ($('#chkSimulate').is(':checked') || $('#chkPreSimulate').is(':checked') || !towers[i].name && $('#chkSuggest').is(':checked')) {
+                            var color = 'green';
+                            if (towers[i].status == '预选' && towers[i].name)
+                                color = 'blue';
+                            if (towers[i].status == '预选' && !towers[i].name)
+                                color = 'red';
+                            circle = new BMap.Circle(pt, towers[i].radius * 1000, { fillColor: color, strokerColor: towers[i].status == '预选' ? 'red' : 'green', strokerWeight: 0.01, fillOpacity: 0.1, strokeOpacity: 0.01 });
+                            if (!towers[i].name && $('#chkSuggest').is(':checked'))
+                                map.addOverlay(circle);
+                            else if (towers[i].status == '预选' && $('#chkPreSimulate').is(':checked'))
+                                map.addOverlay(circle);
+                            else if (towers[i].status != '预选' && $('#chkSimulate').is(':checked'))
+                                map.addOverlay(circle);
+                        }
+
+                        if (towers[i].status != '预选' || towers[i].name)
+                        {
+                            var marker = new BMap.Marker(pt, { icon: icons[towers[i].provider][towers[i].type] });
+                            marker._id = towers[i]._id;
+                            marker.height = towers[i].height;
+                            marker.name = towers[i].name;
+                            marker.district = towers[i].district;
+                            marker.provider = towers[i].provider;
+                            marker.picture = towers[i].picture;
+                            marker.type = towers[i].type;
+                            marker.url = towers[i].url;
+                            marker.status = towers[i].status;
+                            marker.simulate = circle;
+                            marker.radius = towers[i].radius;
+                            marker.addEventListener("mouseover", function (e) {
+                                var x = event.clientX;
+                                var y = event.clientY;
+                                $("#tower-name").html(e.target.name);
+                                $("#tower-status").html(e.target.status);
+                                $("#tower-district").html(e.target.district);
+                                if (e.target.provider == 'China Mobile') {
+                                    $("#tower-provider").html('中国移动');
+                                } else if (e.target.provider == 'China Telecom') {
+                                    $("#tower-provider").html('中国电信');
+                                } else {
+                                    $("#tower-provider").html('中国联通');
+                                }
+                                $("#tower-picture").attr('src', '/file/download/' + e.target.picture);
+                                $("#tower-type").html(e.target.type);
+                                $("#tower-height").html(e.target.height);
+                                $("#tower").css("left", x);
+                                $("#tower").css("top", y);
+                                $("#tower").show();
+                            });
+                            marker.addEventListener("mouseout", function (e) {
+                                $("#tower").hide();
+                            });
+                            marker.addEventListener("dragend", function (e) {
+                                map.removeOverlay(e.target.simulate);
+                                var wgspos = GPS.bd_to_wgs(e.point.lat, e.point.lng);
+                                $.post('/tower/modifypos', { lon: wgspos.lon, lat: wgspos.lat, id: e.target._id });
+                                var newpos = { lat: e.point.lat, lon: e.point.lng };
+                                var _circle = new BMap.Circle(new BMap.Point(newpos.lon, newpos.lat), e.target.radius * 1000, { fillColor: 'blue', strokerColor: 'red', strokerWeight: 0.01, fillOpacity: 0.1, strokeOpacity: 0.01 });
+                                e.target.simulate = _circle;
+                                map.addOverlay(e.target.simulate);
+                            });
+                            marker.addEventListener("click", function (e) {
+                                if (e.target.url) {
+                                    window.location = e.target.url;
+                                }
+                            });
+                            if (towers[i].status == '预选')
+                                marker.enableDragging();
+                            map.addOverlay(marker);
+                        }
+                    }
+                });
+                if ($('#chkRxlev').is(':checked'))
+                    $.getJSON('/signal/rxlev', { left: left, right: right, top: top, bottom: bottom, year: $('#lstYears').val(), month: $('#lstMonths').val() }, function (lines) {
+                        for (var i = 0; i < lines.length; i++) {
+                            var points = [];
+                            for (var j = 0; j < lines[i].points.length; j++) {
+                                var result = GPS.wgs_to_bd(lines[i].points[j].lat, lines[i].points[j].lon);
+                                points.push(new BMap.Point(result.lon, result.lat));
+                            }
+                            var color = "#00ff00";
+                            if (lines[i].color == 1) color = "#fff000";
+                            if (lines[i].color == 2) color = "#ff0000";
+                            var polyline = new BMap.Polyline(points, {strokeColor:color, strokeWeight:5, strokeOpacity:1});
+                            map.addOverlay(polyline);
+                        }
+                    });
+                if ($('#chkShare').is(':checked') || $('#chkNewShare').is(':checked'))
+                    $.getJSON('/tower/sharing', { left: left, right: right, top: top, bottom: bottom }, function (lines) {
+                        for (var i = 0; i < lines.length; i++) {
+                            if (lines[i].begin.status == '预选' && lines[i].end.status == '预选'  && $('#chkNewShare').is(':checked') || (lines[i].begin.status == '正常' || lines[i].end.status == '正常') && $('#chkShare').is(':checked')) {
+                                var points = [];
+                                var result = GPS.wgs_to_bd(lines[i].begin.lat, lines[i].begin.lon);
+                                points.push(new BMap.Point(result.lon, result.lat));
+                                result = GPS.wgs_to_bd(lines[i].end.lat, lines[i].end.lon);
+                                points.push(new BMap.Point(result.lon, result.lat));
+                                var polyline = new BMap.Polyline(points, {
+                                    strokeColor: lines[i].begin.status == '预选' || lines[i].end.status == '预选' ? 'purple' : 'blue',
+                                    strokeWeight: 5,
+                                    strokeOpacity: 1
+                                });
+                                map.addOverlay(polyline);
+                            }
+                        }
+                    });
+            }
+            function gps ()
+            {
+                navigator.geolocation.getCurrentPosition(
+                        function(position) {
+                            $('#txtLon').val(position.coords.longitude);
+                            $('#txtLat').val(position.coords.latitude);
+                            $('#modalEditTower').modal('show');
+                        }
+                );
+            }
+</script>

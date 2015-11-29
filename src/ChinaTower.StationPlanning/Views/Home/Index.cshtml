@@ -10,11 +10,11 @@
             <header class="panel-heading">
                 正常 / 预选
             </header>
-            <div class="sparkline" data-type="line" data-resize="true" data-height="200" data-width="100%" data-line-color="#bfea5f" data-fill-color="#f3fce3" data-highlight-line-color="#e1e5e9" data-spot-radius="5" data-composite-data="@Json.Serialize(((ViewBag.DateStatistics) as IEnumerable<dynamic>).Select(x => x.Normal))" data-composite-line-color="#a3e2fe" data-composite-fill-color="#e3f6ff" data-data="@Json.Serialize(((ViewBag.DateStatistics) as IEnumerable<dynamic>).Select(x => x.Pre))"></div>
+            <div class="sparkline" data-type="line" data-resize="true" data-height="200" data-width="100%" data-line-color="#bfea5f" data-fill-color="#f3fce3" data-highlight-line-color="#e1e5e9" data-spot-radius="5" data-composite-data="@ViewBag.DataStatisticsNormal" data-composite-line-color="#a3e2fe" data-composite-fill-color="#e3f6ff" data-data="@ViewBag.DateStatisticsPre"></div>
             <ul class="list-inline text-muted axis">
-                @foreach (var x in ViewBag.DateStatistics)
+                @foreach (DateTime x in ViewBag.DateStatisticsDates)
                 { 
-                    <li>@x.Date.ToString("yyyy-MM")</li>
+                    <li>@x.ToString("yyyy-MM")</li>
                 }
             </ul>
         </section>
@@ -42,12 +42,12 @@
                 运营商
             </header>
             <div class="list-group list-group-flush m-t-n">
-                @foreach (var x in ViewBag.ProviderStatistics)
+                @foreach (ProviderStatistics x in ViewBag.ProviderStatistics)
                 {
                     <a href="#" class="list-group-item">
                         <i class="icon-chevron-right"></i>
                         <span class="badge">@x.Count</span>
-                        <i class="icon-ok-sign"></i> @x.Type
+                        <i class="icon-ok-sign"></i> @x.Key
                     </a>
                 }
             </div>
@@ -59,12 +59,12 @@
                 城市
             </header>
             <div class="list-group list-group-flush m-t-n">
-                @foreach (var x in ViewBag.CityStatistics)
+                @foreach (CityStatistics x in ViewBag.CityStatistics)
                 {
                     <a href="#" class="list-group-item">
                         <i class="icon-chevron-right"></i>
                         <span class="badge">@x.Count</span>
-                        <i class="icon-ok-sign"></i> @x.Type
+                        <i class="icon-ok-sign"></i> @x.Key
                     </a>
                 }
             </div>

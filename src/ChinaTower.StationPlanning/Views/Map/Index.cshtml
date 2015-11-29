@@ -298,56 +298,56 @@
                 var right = tmp2.lon;
                 var top = tmp2.lat;
                 var bottom = tmp1.lat;
-                $.getJSON('/tower/positions', { series: series, left: left, right: right, top: top, bottom: bottom }, function (towers) {
+                $.getJSON('/map/tower', { series: series, left: left, right: right, top: top, bottom: bottom }, function (towers) {
                     lock = false;
                     for (var i = 0; i < towers.length; i ++)
                     {
-                        if (!($('#chkNormal').is(':checked') && towers[i].status == '正常' || $('#chkHard').is(':checked') && towers[i].status == '难点' || $('#chkStock').is(':checked') && towers[i].status == '储备' || $('#chkPlan').is(':checked') && towers[i].name && towers[i].status == '预选' || $('#chkSuggest').is(':checked') && !towers[i].name && towers[i].status == '预选'))
+                        if (!($('#chkNormal').is(':checked') && towers[i].Status == '正常' || $('#chkHard').is(':checked') && towers[i].Status == '难点' || $('#chkStock').is(':checked') && towers[i].Status == '储备' || $('#chkPlan').is(':checked') && towers[i].Name && towers[i].Status == '预选' || $('#chkSuggest').is(':checked') && !towers[i].Name && towers[i].Status == '预选'))
                             continue;
-                        if (!(!towers[i].name || $('#chkCT').is(':checked') && towers[i].provider == 'China Telecom' || $('#chkCU').is(':checked') && towers[i].provider == 'China Unicom' || $('#chkCM').is(':checked') && towers[i].provider == 'China Mobile'))
+                        if (!(!towers[i].Name || $('#chkCT').is(':checked') && towers[i].Provider == '中国电信' || $('#chkCU').is(':checked') && towers[i].Provider == '中国联通' || $('#chkCM').is(':checked') && towers[i].provider == '中国移动'))
                             continue;
-                        var pos = GPS.wgs_to_bd(towers[i].lat, towers[i].lon);
+                        var pos = GPS.wgs_to_bd(towers[i].Lat, towers[i].Lon);
                         var pt = new BMap.Point(pos.lon, pos.lat);
 
                         var circle;
-                        if ($('#chkSimulate').is(':checked') || $('#chkPreSimulate').is(':checked') || !towers[i].name && $('#chkSuggest').is(':checked')) {
+                        if ($('#chkSimulate').is(':checked') || $('#chkPreSimulate').is(':checked') || !towers[i].Name && $('#chkSuggest').is(':checked')) {
                             var color = 'green';
-                            if (towers[i].status == '预选' && towers[i].name)
+                            if (towers[i].Status == '预选' && towers[i].Name)
                                 color = 'blue';
-                            if (towers[i].status == '预选' && !towers[i].name)
+                            if (towers[i].Status == '预选' && !towers[i].Name)
                                 color = 'red';
-                            circle = new BMap.Circle(pt, towers[i].radius * 1000, { fillColor: color, strokerColor: towers[i].status == '预选' ? 'red' : 'green', strokerWeight: 0.01, fillOpacity: 0.1, strokeOpacity: 0.01 });
-                            if (!towers[i].name && $('#chkSuggest').is(':checked'))
+                            circle = new BMap.Circle(pt, towers[i].Radius * 1000, { fillColor: color, strokerColor: towers[i].status == '预选' ? 'red' : 'green', strokerWeight: 0.01, fillOpacity: 0.1, strokeOpacity: 0.01 });
+                            if (!towers[i].Name && $('#chkSuggest').is(':checked'))
                                 map.addOverlay(circle);
-                            else if (towers[i].status == '预选' && $('#chkPreSimulate').is(':checked'))
+                            else if (towers[i].Status == '预选' && $('#chkPreSimulate').is(':checked'))
                                 map.addOverlay(circle);
-                            else if (towers[i].status != '预选' && $('#chkSimulate').is(':checked'))
+                            else if (towers[i].Status != '预选' && $('#chkSimulate').is(':checked'))
                                 map.addOverlay(circle);
                         }
 
-                        if (towers[i].status != '预选' || towers[i].name)
+                        if (towers[i].Status != '预选' || towers[i].Name)
                         {
                             var marker = new BMap.Marker(pt, { icon: icons[towers[i].provider][towers[i].type] });
-                            marker._id = towers[i]._id;
-                            marker.height = towers[i].height;
-                            marker.name = towers[i].name;
-                            marker.district = towers[i].district;
-                            marker.provider = towers[i].provider;
-                            marker.picture = towers[i].picture;
-                            marker.type = towers[i].type;
-                            marker.url = towers[i].url;
-                            marker.status = towers[i].status;
+                            marker._id = towers[i].Id;
+                            marker.height = towers[i].Height;
+                            marker.name = towers[i].Name;
+                            marker.district = towers[i].District;
+                            marker.provider = towers[i].Provider;
+                            marker.picture = towers[i].Picture;
+                            marker.type = towers[i].Type;
+                            marker.url = towers[i].Url;
+                            marker.status = towers[i].Status;
                             marker.simulate = circle;
-                            marker.radius = towers[i].radius;
+                            marker.radius = towers[i].Radius;
                             marker.addEventListener("mouseover", function (e) {
                                 var x = event.clientX;
                                 var y = event.clientY;
                                 $("#tower-name").html(e.target.name);
                                 $("#tower-status").html(e.target.status);
                                 $("#tower-district").html(e.target.district);
-                                if (e.target.provider == 'China Mobile') {
+                                if (e.target.provider == '中国移动') {
                                     $("#tower-provider").html('中国移动');
-                                } else if (e.target.provider == 'China Telecom') {
+                                } else if (e.target.provider == '中国电信') {
                                     $("#tower-provider").html('中国电信');
                                 } else {
                                     $("#tower-provider").html('中国联通');
@@ -376,7 +376,7 @@
                                     window.location = e.target.url;
                                 }
                             });
-                            if (towers[i].status == '预选')
+                            if (towers[i].Status == '预选')
                                 marker.enableDragging();
                             map.addOverlay(marker);
                         }

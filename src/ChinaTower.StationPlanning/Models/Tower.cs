@@ -36,7 +36,7 @@ namespace ChinaTower.StationPlanning.Models
         public string Url { get; set; }
 
         [ForeignKey("Image")]
-        public Guid BlobId { get; set; }
+        public Guid? BlobId { get; set; }
 
         public Blob Image { get; set; }
 

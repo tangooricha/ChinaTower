@@ -11,6 +11,9 @@
             select, input[type="text"] {
                 width: 130px !important;
             }
+            .modal select, .modal input[type="text"] {
+                width: 300px !important;
+            }
         </style>
         <div id="modalImportTowers" class="modal fade">
             <div class="modal-dialog">
@@ -47,102 +50,107 @@
                 </div>
             </div>
         </div>
-        <div id="modalEditTower" class="modal hide fade">
-            <form asp-action="Edit" asp-controller="Tower" method="post" enctype="multipart/form-data">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h3>修改铁塔</h3>
+        <div id="modalEditTower" class="modal fade">
+            <div class="modal-dialog">
+                <div class="modal-content">
+
+                    <form asp-action="Edit" asp-controller="Tower" method="post" enctype="multipart/form-data">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            <h3>修改铁塔</h3>
+                        </div>
+                        <div class="modal-body">
+                            <input type="hidden" name="id" id="TowerID" />
+                            <table class="edit-tower">
+                                <tr>
+                                    <td class="td-gray">铁塔名称</td>
+                                    <td><input type="text" name="name" id="txtName" placeholder="铁塔名称" class="form-control" /></td>
+                                </tr>
+                                <tr>
+                                    <td class="td-gray">城市</td>
+                                    <td><input type="text" name="city" id="txtCity" placeholder="城市" class="form-control" /></td>
+                                </tr>
+                                <tr>
+                                    <td class="td-gray">所属地区</td>
+                                    <td><input type="text" name="district" id="txtDistrict" placeholder="所属地区" class="form-control" /></td>
+                                </tr>
+                                <tr>
+                                    <td class="td-gray">运营商</td>
+                                    <td>
+                                        <select id="lstEditProviders" name="provider" class="form-control">
+                                            <option value="China Mobile">中国移动</option>
+                                            <option value="China Telecom">中国电信</option>
+                                            <option value="China Unicom">中国联通</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="td-gray">场景</td>
+                                    <td>
+                                        <select id="lstEditScene" name="scene" class="form-control">
+                                            <option>郊区</option>
+                                            <option>密集城区</option>
+                                            <option>农村</option>
+                                            <option>一般城区</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="td-gray">塔型</td>
+                                    <td>
+                                        <select id="lstEditTypes" name="type" class="form-control">
+                                            <option value="B">B</option>
+                                            <option value="T">T</option>
+                                            <option value="Z">Z</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="td-gray">塔高</td>
+                                    <td><input name="height" type="text" id="txtHeight" placeholder="塔高" class="form-control" /></td>
+                                </tr>
+                                <tr>
+                                    <td class="td-gray">经度</td>
+                                    <td><input name="lon" type="text" id="txtLon" placeholder="经度" class="form-control" /></td>
+                                </tr>
+                                <tr>
+                                    <td class="td-gray">纬度</td>
+                                    <td><input name="lat" type="text" id="txtLat" placeholder="纬度" class="form-control" /></td>
+                                </tr>
+                                <tr>
+                                    <td class="td-gray">详细地址</td>
+                                    <td><input name="address" type="text" id="txtAddress" placeholder="详细地址" value="" class="form-control" /></td>
+                                </tr>
+                                <tr>
+                                    <td class="td-gray">属性</td>
+                                    <td>
+                                        <select name="status" id="lstStatus" class="form-control">
+                                            <option value="正常">正常</option>
+                                            <option value="预选">预选</option>
+                                            <option value="难点">难点</option>
+                                            <option value="储备">储备</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="td-gray">链接URL</td>
+                                    <td><input name="url" type="text" id="txtUrl" placeholder="链接URL" class="form-control" /></td>
+                                </tr>
+                                <tr>
+                                    <td class="td-gray">铁塔照片</td>
+                                    <td>
+                                        <p><input name="file" type="file" /></p>
+                                        <p><img id="imgTower" style="max-width: 100%; max-height: 200px" /></p>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn btn-primary">保存</button>
+                        </div>
+                    </form>
                 </div>
-                <div class="modal-body">
-                    <input type="hidden" name="id" id="TowerID" />
-                    <table class="edit-tower">
-                        <tr>
-                            <td class="td-gray">铁塔名称</td>
-                            <td><input type="text" name="name" id="txtName" placeholder="铁塔名称" class="form-control" /></td>
-                        </tr>
-                        <tr>
-                            <td class="td-gray">城市</td>
-                            <td><input type="text" name="city" id="txtCity" placeholder="城市" class="form-control" /></td>
-                        </tr>
-                        <tr>
-                            <td class="td-gray">所属地区</td>
-                            <td><input type="text" name="district" id="txtDistrict" placeholder="所属地区" class="form-control" /></td>
-                        </tr>
-                        <tr>
-                            <td class="td-gray">运营商</td>
-                            <td>
-                                <select id="lstEditProviders" name="provider" class="form-control">
-                                    <option value="China Mobile">中国移动</option>
-                                    <option value="China Telecom">中国电信</option>
-                                    <option value="China Unicom">中国联通</option>
-                                </select>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="td-gray">场景</td>
-                            <td>
-                                <select id="lstEditScene" name="scene" class="form-control">
-                                    <option>郊区</option>
-                                    <option>密集城区</option>
-                                    <option>农村</option>
-                                    <option>一般城区</option>
-                                </select>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="td-gray">塔型</td>
-                            <td>
-                                <select id="lstEditTypes" name="type" class="form-control">
-                                    <option value="B">B</option>
-                                    <option value="T">T</option>
-                                    <option value="Z">Z</option>
-                                </select>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="td-gray">塔高</td>
-                            <td><input name="height" type="text" id="txtHeight" placeholder="塔高" class="form-control" /></td>
-                        </tr>
-                        <tr>
-                            <td class="td-gray">经度</td>
-                            <td><input name="lon" type="text" id="txtLon" placeholder="经度" class="form-control" /></td>
-                        </tr>
-                        <tr>
-                            <td class="td-gray">纬度</td>
-                            <td><input name="lat" type="text" id="txtLat" placeholder="纬度" class="form-control" /></td>
-                        </tr>
-                        <tr>
-                            <td class="td-gray">详细地址</td>
-                            <td><input name="address" type="text" id="txtAddress" placeholder="详细地址" value="" /></td>
-                        </tr>
-                        <tr>
-                            <td class="td-gray">属性</td>
-                            <td>
-                                <select name="status" id="lstStatus" class="form-control">
-                                    <option value="正常">正常</option>
-                                    <option value="预选">预选</option>
-                                    <option value="难点">难点</option>
-                                    <option value="储备">储备</option>
-                                </select>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="td-gray">链接URL</td>
-                            <td><input name="url" type="text" id="txtUrl" placeholder="链接URL" class="form-control" /></td>
-                        </tr>
-                        <tr>
-                            <td class="td-gray">铁塔照片</td>
-                            <td>
-                                <p><input name="file" type="file" /></p>
-                                <p><img id="imgTower" style="max-width: 100%; max-height: 200px" class="form-control" /></p>
-                            </td>
-                        </tr>
-                    </table>
-                </div>
-                <div class="modal-footer">
-                    <button class="btn btn-primary">保存</button>
-                </div>
-            </form>
+            </div>
         </div>
         <section class="panel">
             <header class="panel-heading">
@@ -151,27 +159,27 @@
             <form asp-action="Index" asp-controller="Tower" method="get" class="row text-small">
                 <div class="col-lg-9">
                     <p class="form-inline">
-                        <input type="text" placeholder="铁塔名称" id="txtSearchName" class="form-control" />
+                        <input type="text" placeholder="铁塔名称" id="txtSearchName" class="form-control" name="Name" value="@Context.Request.Query["name"]" />
                         <select id="lstProviders" class="form-control" name="provider">
-                            <option selected value="">运营商</option>
-                            <option value="China Mobile">中国移动</option>
-                            <option value="China Telecom">中国电信</option>
-                            <option value="China Unicom">中国联通</option>
+                            <option value="">运营商</option>
+                            <option @(Context.Request.Query["provider"] == "中国移动" ? "selected" : "")>中国移动</option>
+                            <option @(Context.Request.Query["provider"] == "中国电信" ? "selected" : "")>中国电信</option>
+                            <option @(Context.Request.Query["provider"] == "中国联通" ? "selected" : "")>中国联通</option>
                         </select>
                         <select id="lstTypes" style="width:90px!important" class="form-control" name="type">
                             <option value="">塔型</option>
-                            <option value="B">B</option>
-                            <option value="T">T</option>
-                            <option value="Z">Z</option>
+                            <option @(Context.Request.Query["type"] == "B" ? "selected" : "")>B</option>
+                            <option @(Context.Request.Query["type"] == "T" ? "selected" : "")>T</option>
+                            <option @(Context.Request.Query["type"] == "Z" ? "selected" : "")>Z</option>
                         </select>
-                        <input type="text" placeholder="城市" id="txtSearchCity" class="form-control" name="city" />
-                        <input type="text" placeholder="地区" id="txtSearchDistrict" class="form-control" name="district" />
+                        <input type="text" placeholder="城市" id="txtSearchCity" class="form-control" name="city" value="@Context.Request.Query["city"]" />
+                        <input type="text" placeholder="地区" id="txtSearchDistrict" class="form-control" name="district" @Context.Request.Query["district"] />
                         <select id="lstSearchStatus" class="form-control" name="status">
                             <option value="">属性</option>
-                            <option value="正常">正常</option>
-                            <option value="预选">预选</option>
-                            <option value="难点">难点</option>
-                            <option value="储备">储备</option>
+                            <option @(Context.Request.Query["type"] == "正常" ? "selected" : "")>正常</option>
+                            <option @(Context.Request.Query["type"] == "预选" ? "selected" : "")>预选</option>
+                            <option @(Context.Request.Query["type"] == "难点" ? "selected" : "")>难点</option>
+                            <option @(Context.Request.Query["type"] == "储备" ? "selected" : "")>储备</option>
                         </select>
                     </p>
                 </div>

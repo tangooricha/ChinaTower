@@ -162,24 +162,24 @@
                         <input type="text" placeholder="铁塔名称" id="txtSearchName" class="form-control" name="Name" value="@Context.Request.Query["name"]" />
                         <select id="lstProviders" class="form-control" name="provider">
                             <option value="">运营商</option>
-                            <option @(Context.Request.Query["provider"] == "中国移动" ? "selected" : "")>中国移动</option>
-                            <option @(Context.Request.Query["provider"] == "中国电信" ? "selected" : "")>中国电信</option>
-                            <option @(Context.Request.Query["provider"] == "中国联通" ? "selected" : "")>中国联通</option>
+                            <!option @(Context.Request.Query["provider"] == "中国移动" ? "selected" : "")>中国移动</!option>
+                            <!option @(Context.Request.Query["provider"] == "中国电信" ? "selected" : "")>中国电信</!option>
+                            <!option @(Context.Request.Query["provider"] == "中国联通" ? "selected" : "")>中国联通</!option>
                         </select>
                         <select id="lstTypes" style="width:90px!important" class="form-control" name="type">
                             <option value="">塔型</option>
-                            <option @(Context.Request.Query["type"] == "B" ? "selected" : "")>B</option>
-                            <option @(Context.Request.Query["type"] == "T" ? "selected" : "")>T</option>
-                            <option @(Context.Request.Query["type"] == "Z" ? "selected" : "")>Z</option>
+                            <!option @(Context.Request.Query["type"] == "B" ? "selected" : "")>B</!option>
+                            <!option @(Context.Request.Query["type"] == "T" ? "selected" : "")>T</!option>
+                            <!option @(Context.Request.Query["type"] == "Z" ? "selected" : "")>Z</!option>
                         </select>
                         <input type="text" placeholder="城市" id="txtSearchCity" class="form-control" name="city" value="@Context.Request.Query["city"]" />
                         <input type="text" placeholder="地区" id="txtSearchDistrict" class="form-control" name="district" @Context.Request.Query["district"] />
                         <select id="lstSearchStatus" class="form-control" name="status">
                             <option value="">属性</option>
-                            <option @(Context.Request.Query["type"] == "正常" ? "selected" : "")>正常</option>
-                            <option @(Context.Request.Query["type"] == "预选" ? "selected" : "")>预选</option>
-                            <option @(Context.Request.Query["type"] == "难点" ? "selected" : "")>难点</option>
-                            <option @(Context.Request.Query["type"] == "储备" ? "selected" : "")>储备</option>
+                            <!option @(Context.Request.Query["type"] == "正常" ? "selected" : "")>正常</!option>
+                            <!option @(Context.Request.Query["type"] == "预选" ? "selected" : "")>预选</!option>
+                            <!option @(Context.Request.Query["type"] == "难点" ? "selected" : "")>难点</!option>
+                            <!option @(Context.Request.Query["type"] == "储备" ? "selected" : "")>储备</!option>
                         </select>
                     </p>
                 </div>

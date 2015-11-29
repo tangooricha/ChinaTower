@@ -7,7 +7,7 @@
         "type": "project",
         "framework": "DNX,Version=v4.5.1",
         "dependencies": {
-          "CodeComb.AspNet.Extensions": "2.0.0-rc1-final",
+          "CodeComb.AspNet.Extensions": "2.0.0-rc1-final-2",
           "CodeComb.Media": "2.0.0-rc1-final",
           "CodeComb.Net.EmailSender": "2.0.0-rc1-final",
           "CodeComb.Security.Aes": "2.0.0-rc1-final",
@@ -22,7 +22,7 @@
           "Microsoft.Extensions.Logging.Debug": "1.0.0-rc1-final"
         }
       },
-      "CodeComb.AspNet.Extensions/2.0.0-rc1-final": {
+      "CodeComb.AspNet.Extensions/2.0.0-rc1-final-2": {
         "type": "package",
         "dependencies": {
           "Microsoft.AspNet.Identity.EntityFramework": "3.0.0-rc1-final",
@@ -2152,7 +2152,7 @@
         "type": "project",
         "framework": "DNX,Version=v4.5.1",
         "dependencies": {
-          "CodeComb.AspNet.Extensions": "2.0.0-rc1-final",
+          "CodeComb.AspNet.Extensions": "2.0.0-rc1-final-2",
           "CodeComb.Media": "2.0.0-rc1-final",
           "CodeComb.Net.EmailSender": "2.0.0-rc1-final",
           "CodeComb.Security.Aes": "2.0.0-rc1-final",
@@ -2167,7 +2167,7 @@
           "Microsoft.Extensions.Logging.Debug": "1.0.0-rc1-final"
         }
       },
-      "CodeComb.AspNet.Extensions/2.0.0-rc1-final": {
+      "CodeComb.AspNet.Extensions/2.0.0-rc1-final-2": {
         "type": "package",
         "dependencies": {
           "Microsoft.AspNet.Identity.EntityFramework": "3.0.0-rc1-final",
@@ -4303,7 +4303,7 @@
         "type": "project",
         "framework": "DNX,Version=v4.5.1",
         "dependencies": {
-          "CodeComb.AspNet.Extensions": "2.0.0-rc1-final",
+          "CodeComb.AspNet.Extensions": "2.0.0-rc1-final-2",
           "CodeComb.Media": "2.0.0-rc1-final",
           "CodeComb.Net.EmailSender": "2.0.0-rc1-final",
           "CodeComb.Security.Aes": "2.0.0-rc1-final",
@@ -4318,7 +4318,7 @@
           "Microsoft.Extensions.Logging.Debug": "1.0.0-rc1-final"
         }
       },
-      "CodeComb.AspNet.Extensions/2.0.0-rc1-final": {
+      "CodeComb.AspNet.Extensions/2.0.0-rc1-final-2": {
         "type": "package",
         "dependencies": {
           "Microsoft.AspNet.Identity.EntityFramework": "3.0.0-rc1-final",
@@ -6455,12 +6455,12 @@
       "type": "project",
       "path": "../../src/ChinaTower.StationPlanning/project.json"
     },
-    "CodeComb.AspNet.Extensions/2.0.0-rc1-final": {
+    "CodeComb.AspNet.Extensions/2.0.0-rc1-final-2": {
       "type": "package",
-      "sha512": "rX0de9uNRBGOy8JrBJL+mNpGWyyyZ4zsqd/s+j8Sw05UVGgZWcpJJqqDxycqklI+zwfnCq6jHFIpzqnHDuqpBg==",
+      "sha512": "kMj9+Ytu7FsCK/8KHI7+NDB7ORcWJ+NUmod1YkL488GOwgmnQj0pyDG+sgfizML4YAr877InEPOs5OXrHIiQMA==",
       "files": [
-        "CodeComb.AspNet.Extensions.2.0.0-rc1-final.nupkg",
-        "CodeComb.AspNet.Extensions.2.0.0-rc1-final.nupkg.sha512",
+        "CodeComb.AspNet.Extensions.2.0.0-rc1-final-2.nupkg",
+        "CodeComb.AspNet.Extensions.2.0.0-rc1-final-2.nupkg.sha512",
         "CodeComb.AspNet.Extensions.nuspec",
         "lib/dotnet5.4/CodeComb.AspNet.Extensions.dll",
         "lib/dotnet5.4/CodeComb.AspNet.Extensions.xml",

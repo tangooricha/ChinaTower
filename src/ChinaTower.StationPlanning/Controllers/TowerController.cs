@@ -27,9 +27,10 @@ namespace ChinaTower.StationPlanning.Controllers
                 towers = towers.Where(x => x.Type == type.Value);
             if (status.HasValue)
                 towers = towers.Where(x => x.Status == status.Value);
-            if (type.HasValue)
+            if (provider.HasValue)
                 towers = towers.Where(x => x.Provider == provider.Value);
-            return AjaxPagedView(towers, ".lst-towers");
+            var pi = ViewData["PagerInfo"] as PagerInfo;
+            return PagedView(towers);
         }
 
         public IActionResult Tower(double? left, double? right, double? top, double? bottom)
@@ -145,6 +146,15 @@ namespace ChinaTower.StationPlanning.Controllers
                 x.Title = "导入成功";
                 x.Details = "铁塔信息已经成功导入数据库！";
             });
+        }
+
+        [HttpPost]
+        public string Delete(Guid id)
+        {
+            var tower = DB.Towers.Where(x => x.Id == id).Single();
+            DB.Towers.Remove(tower);
+            DB.SaveChanges();
+            return "ok";
         }
     }
 }

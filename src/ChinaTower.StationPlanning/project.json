@@ -15,7 +15,7 @@
     "Microsoft.Extensions.Logging.Debug": "1.0.0-rc1-final",
     "EntityFramework.Sqlite": "7.0.0-rc1-final",
     "CodeComb.Media": "2.0.0-rc1-final",
-    "CodeComb.AspNet.Extensions": "2.0.0-rc1-final",
+    "CodeComb.AspNet.Extensions": "2.0.0-rc1-final-2",
     "CodeComb.Security.Aes": "2.0.0-rc1-final",
     "CodeComb.Net.EmailSender": "2.0.0-rc1-final"
   },

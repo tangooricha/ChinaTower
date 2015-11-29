@@ -273,7 +273,7 @@
                 $('#modalEditTower').modal('show');
             });
             if (@(Context.Request.Query.ContainsKey("lon") ? "true" : "false")) {
-                var center = GPS.wgs_to_bd('<%= req.query.lat %>', '<%= req.query.lon %>');
+                var center = GPS.wgs_to_bd('@Context.Request.Query["lat"]', '@Context.Request.Query["lon"]');
             map.centerAndZoom(new BMap.Point(center.lon, center.lat), 17);
             }
 
@@ -383,16 +383,16 @@
                     }
                 });
                 if ($('#chkRxlev').is(':checked'))
-                    $.getJSON('/signal/rxlev', { left: left, right: right, top: top, bottom: bottom, year: $('#lstYears').val(), month: $('#lstMonths').val() }, function (lines) {
+                    $.getJSON('/map/rxlev', { left: left, right: right, top: top, bottom: bottom, year: $('#lstYears').val(), month: $('#lstMonths').val() }, function (lines) {
                         for (var i = 0; i < lines.length; i++) {
                             var points = [];
-                            for (var j = 0; j < lines[i].points.length; j++) {
-                                var result = GPS.wgs_to_bd(lines[i].points[j].lat, lines[i].points[j].lon);
-                                points.push(new BMap.Point(result.lon, result.lat));
-                            }
+                            var result = GPS.wgs_to_bd(lines[i].BeginLat, lines[i].BeginLon);
+                            points.push(new BMap.Point(result.lon, result.lat));
+                            result = GPS.wgs_to_bd(lines[i].EndLat, lines[i].EndLon);
+                            points.push(new BMap.Point(result.lon, result.lat));
                             var color = "#00ff00";
-                            if (lines[i].color == 1) color = "#fff000";
-                            if (lines[i].color == 2) color = "#ff0000";
+                            if (lines[i].Color == 1) color = "#fff000";
+                            if (lines[i].Color == 2) color = "#ff0000";
                             var polyline = new BMap.Polyline(points, {strokeColor:color, strokeWeight:5, strokeOpacity:1});
                             map.addOverlay(polyline);
                         }

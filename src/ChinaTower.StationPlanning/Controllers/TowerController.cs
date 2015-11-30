@@ -99,6 +99,40 @@ namespace ChinaTower.StationPlanning.Controllers
             }
         }
 
+        public IActionResult Position(double? left, double? right, double? top, double? bottom, int? year, int? month)
+        {
+            IEnumerable<Tower> towers = DB.Towers;
+            if (right.HasValue && right - left > 1.188078574995771)
+            {
+                return Json(new List<RxLevLine>());
+            }
+            else
+            {
+                if (year.HasValue)
+                    towers = towers.Where(x => x.Time.Year == year.Value);
+                if (month.HasValue)
+                    towers = towers.Where(x => x.Time.Month == month.Value);
+                if (left.HasValue)
+                    towers = towers.Where(x => x.Lon >= left.Value);
+                if (right.HasValue)
+                    towers = towers.Where(x => x.Lon <= right.Value);
+                if (top.HasValue)
+                    towers = towers.Where(x => x.Lat <= top.Value);
+                if (bottom.HasValue)
+                    towers = towers.Where(x => x.Lat >= bottom.Value);
+                if (User.IsInRole("Member"))
+                {
+                    var claims = User.Claims
+                        .Where(x => x.Type == "有权限访问地市数据")
+                        .Select(x => x.Value)
+                        .ToList();
+                    towers = towers.Where(x => claims.Contains(x.City));
+                }
+                return Json(towers.ToList());
+            }
+        }
+
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Import(IFormFile file, TowerStatus status)

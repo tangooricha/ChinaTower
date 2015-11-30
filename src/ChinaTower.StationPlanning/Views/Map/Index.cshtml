@@ -93,9 +93,9 @@
                             <td class="td-gray">运营商</td>
                             <td>
                                 <select id="lstEditProviders" name="provider" class="form-control">
-                                    <!option value="China Mobile">中国移动<!/option>
-                                    <!option value="China Telecom">中国电信<!/option>
-                                    <!option value="China Unicom">中国联通<!/option>
+                                    <!option value="中国移动">中国移动<!/option>
+                                    <!option value="中国电信">中国电信<!/option>
+                                    <!option value="中国联通">中国联通<!/option>
                                 </select>
                             </td>
                         </tr>
@@ -223,7 +223,7 @@
 </div>
 <script>
             $(window).resize(function () { resize() });
-            $(document).ready(function(){ resize() });
+            $(document).ready(function(){ resize(); lock = false; BuildOverlays(); });
 
             function resize()
             {
@@ -247,21 +247,23 @@
                 if (@(Context.Request.Query.ContainsKey("lon") ? "false" : "true")) {
                     $.getJSON('/tower/initPosition', {}, function (ret) {
                         map.centerAndZoom(new BMap.Point(ret.Lon, ret.Lat), 17);
+                        lock = false;
+                        BuildOverlays();
                 });
             }
             }
-            icons['China Mobile'] = {};
-            icons['China Mobile']['B'] = new BMap.Icon("/images/cm-b.png", new BMap.Size(30, 30));
-            icons['China Mobile']['T'] = new BMap.Icon("/images/cm-t.png", new BMap.Size(30, 30));
-            icons['China Mobile']['Z'] = new BMap.Icon("/images/cm-z.png", new BMap.Size(30, 30));
-            icons['China Telecom'] = {};
-            icons['China Telecom']['B'] = new BMap.Icon("/images/ct-b.png", new BMap.Size(30, 30));
-            icons['China Telecom']['T'] = new BMap.Icon("/images/ct-t.png", new BMap.Size(30, 30));
-            icons['China Telecom']['Z'] = new BMap.Icon("/images/ct-z.png", new BMap.Size(30, 30));
-            icons['China Unicom'] = {};
-            icons['China Unicom']['B'] = new BMap.Icon("/images/cu-b.png", new BMap.Size(30, 30));
-            icons['China Unicom']['T'] = new BMap.Icon("/images/cu-t.png", new BMap.Size(30, 30));
-            icons['China Unicom']['Z'] = new BMap.Icon("/images/cu-z.png", new BMap.Size(30, 30));
+            icons['中国移动'] = {};
+            icons['中国移动']['B'] = new BMap.Icon("/images/cm-b.png", new BMap.Size(30, 30));
+            icons['中国移动']['T'] = new BMap.Icon("/images/cm-t.png", new BMap.Size(30, 30));
+            icons['中国移动']['Z'] = new BMap.Icon("/images/cm-z.png", new BMap.Size(30, 30));
+            icons['中国电信'] = {};
+            icons['中国电信']['B'] = new BMap.Icon("/images/ct-b.png", new BMap.Size(30, 30));
+            icons['中国电信']['T'] = new BMap.Icon("/images/ct-t.png", new BMap.Size(30, 30));
+            icons['中国电信']['Z'] = new BMap.Icon("/images/ct-z.png", new BMap.Size(30, 30));
+            icons['中国联通'] = {};
+            icons['中国联通']['B'] = new BMap.Icon("/images/cu-b.png", new BMap.Size(30, 30));
+            icons['中国联通']['T'] = new BMap.Icon("/images/cu-t.png", new BMap.Size(30, 30));
+            icons['中国联通']['Z'] = new BMap.Icon("/images/cu-z.png", new BMap.Size(30, 30));
 
             map.addControl(new BMap.MapTypeControl());
             map.enableScrollWheelZoom(true);
@@ -298,7 +300,7 @@
                 var right = tmp2.lon;
                 var top = tmp2.lat;
                 var bottom = tmp1.lat;
-                $.getJSON('/map/tower', { series: series, left: left, right: right, top: top, bottom: bottom }, function (towers) {
+                $.getJSON('/tower/position', { left: left, right: right, top: top, bottom: bottom }, function (towers) {
                     lock = false;
                     for (var i = 0; i < towers.length; i ++)
                     {
@@ -327,7 +329,7 @@
 
                         if (towers[i].Status != '预选' || towers[i].Name)
                         {
-                            var marker = new BMap.Marker(pt, { icon: icons[towers[i].provider][towers[i].type] });
+                            var marker = new BMap.Marker(pt, { icon: icons[towers[i].Provider][towers[i].Type] });
                             marker._id = towers[i].Id;
                             marker.height = towers[i].Height;
                             marker.name = towers[i].Name;
@@ -383,7 +385,7 @@
                     }
                 });
                 if ($('#chkRxlev').is(':checked'))
-                    $.getJSON('/map/rxlev', { left: left, right: right, top: top, bottom: bottom, year: $('#lstYears').val(), month: $('#lstMonths').val() }, function (lines) {
+                    $.getJSON('/tower/rxlev', { left: left, right: right, top: top, bottom: bottom, year: $('#lstYears').val(), month: $('#lstMonths').val() }, function (lines) {
                         for (var i = 0; i < lines.length; i++) {
                             var points = [];
                             var result = GPS.wgs_to_bd(lines[i].BeginLat, lines[i].BeginLon);

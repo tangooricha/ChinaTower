@@ -1,6 +1,8 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 
 namespace ChinaTower.StationPlanning.Models
 {
@@ -17,12 +19,16 @@ namespace ChinaTower.StationPlanning.Models
         [MaxLength(64)]
         public string City { get; set; }
 
+        [JsonConverter(typeof(StringEnumConverter))]
         public TowerType Type { get; set; }
 
+        [JsonConverter(typeof(StringEnumConverter))]
         public TowerScene Scene { get; set; }
 
+        [JsonConverter(typeof(StringEnumConverter))]
         public TowerStatus Status { get; set; }
 
+        [JsonConverter(typeof(StringEnumConverter))]
         public Provider Provider { get; set; }
 
         public double Lon { get; set; }

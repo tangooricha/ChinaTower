@@ -1,0 +1,19 @@
+﻿@model IEnumerable<Suggest>
+@{
+    Layout = null;
+}
+<table>
+    <tr>
+        <td>经度</td>
+        <td>纬度</td>
+        <td>半径</td>
+    </tr>
+    @foreach (var x in Model)
+    {
+        <tr>
+            <td>@x.Lat</td>
+            <td>@x.Lon</td>
+            <td>@x.Radius</td>
+        </tr>
+    }
+</table>

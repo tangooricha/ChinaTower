@@ -40,19 +40,19 @@ namespace ChinaTower.StationPlanning.Algorithms
                         switch (towers[j].Scene)
                         {
                             case TowerScene.郊区:
-                                if (dis < Convert.ToDouble(Config["Settings.Plan.Suburb"]))
+                                if (dis < Convert.ToDouble(Config["Settings:Plan:Suburb"]))
                                     flag = true;
                                 break;
                             case TowerScene.密集城区:
-                                if (dis < Convert.ToDouble(Config["Settings.Plan.Crowded"]))
+                                if (dis < Convert.ToDouble(Config["Settings:Plan:Crowded"]))
                                     flag = true;
                                 break;
                             case TowerScene.农村:
-                                if (dis < Convert.ToDouble(Config["Settings.Plan.Village"]))
+                                if (dis < Convert.ToDouble(Config["Settings:Plan:Village"]))
                                     flag = true;
                                 break;
                             default:
-                                if (dis < Convert.ToDouble(Config["Settings.Plan.City"]))
+                                if (dis < Convert.ToDouble(Config["Settings:Plan:City"]))
                                     flag = true;
                                 break;
                         }
@@ -62,19 +62,19 @@ namespace ChinaTower.StationPlanning.Algorithms
                         switch (towers[j].Scene)
                         {
                             case TowerScene.郊区:
-                                if (dis < Convert.ToDouble(Config["Settings.Share.Suburb"]))
+                                if (dis < Convert.ToDouble(Config["Settings:Share:Suburb"]))
                                     flag = true;
                                 break;
                             case TowerScene.密集城区:
-                                if (dis < Convert.ToDouble(Config["Settings.Share.Crowded"]))
+                                if (dis < Convert.ToDouble(Config["Settings:Share:Crowded"]))
                                     flag = true;
                                 break;
                             case TowerScene.农村:
-                                if (dis < Convert.ToDouble(Config["Settings.Share.Village"]))
+                                if (dis < Convert.ToDouble(Config["Settings:Share:Village"]))
                                     flag = true;
                                 break;
                             default:
-                                if (dis < Convert.ToDouble(Config["Settings.Share.City"]))
+                                if (dis < Convert.ToDouble(Config["Settings:Share:City"]))
                                     flag = true;
                                 break;
                         }

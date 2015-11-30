@@ -48,7 +48,7 @@ namespace ChinaTower.StationPlanning.Algorithms
             for (var i = 0; i < t.Count; i++)
             {
                 var dis = GetDistance(lat, lon, t[i].Lat, t[i].Lon);
-                if (dis <= t[i].Radius * 1000)
+                if (dis <= t[i].Radius)
                     return 0;
                 else if (dis < mn)
                     mn = dis;
@@ -90,6 +90,8 @@ namespace ChinaTower.StationPlanning.Algorithms
                 {
                 }
             }
+            if (x0 == x1 || y0 == y1)
+                return new List<Position>();
             var dis = (x1 - x0) / 35;
             for (var i = x0; i <= x1; i += dis)
                 for (var j = y0; j <= y1; j += dis)

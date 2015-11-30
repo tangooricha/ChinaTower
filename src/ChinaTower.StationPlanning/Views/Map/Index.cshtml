@@ -244,9 +244,9 @@
             var init = false;
             if (!init) {
                 init = true;
-                if (@(Context.Request.Query.ContainsKey("lon") ? "true" : "false")) {
+                if (@(Context.Request.Query.ContainsKey("lon") ? "false" : "true")) {
                     $.getJSON('/tower/initPosition', {}, function (ret) {
-                        map.centerAndZoom(new BMap.Point(ret.lon, ret.lat), 17);
+                        map.centerAndZoom(new BMap.Point(ret.Lon, ret.Lat), 17);
                 });
             }
             }

@@ -34,6 +34,7 @@ namespace ChinaTower.StationPlanning
             #endregion
 
             #region Adding Others
+            services.AddConfiguration();
             services.AddMvc();
             services.AddSmartCookies();
             services.AddSmartUser<User, string>();

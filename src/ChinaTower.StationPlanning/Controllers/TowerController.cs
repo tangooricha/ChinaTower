@@ -6,6 +6,7 @@ using System.Data.OleDb;
 using Microsoft.AspNet.Mvc;
 using Microsoft.AspNet.Authorization;
 using Microsoft.AspNet.Http;
+using Microsoft.Extensions.Configuration;
 using ChinaTower.StationPlanning.Models;
 using ChinaTower.StationPlanning.Algorithms;
 
@@ -253,8 +254,11 @@ namespace ChinaTower.StationPlanning.Controllers
                 .Where(x => x.Lon <= right)
                 .Where(x => x.Lat >= bottom)
                 .Where(x => x.Lat <= top)
+                .GroupBy(x => x.District)
                 .ToList();
-            var ret = WgsDis.Solve(towers);
+            var ret = new List<KeyValuePair<Tower, Tower>>();
+            foreach (var x in towers)
+                ret.AddRange(WgsDis.Solve(x.ToList()));
             return Json(ret.Select(x => new
             {
                 BeginLat = x.Key.Lat,
@@ -263,6 +267,79 @@ namespace ChinaTower.StationPlanning.Controllers
                 EndLon = x.Value.Lon,
                 Status = x.Key.Status
             }));
+        }
+
+        public IActionResult Share([FromServices] WgsDis WgsDis, bool? raw)
+        {
+            var towers = DB.Towers
+                .GroupBy(x => x.District)
+                .ToList();
+            var ret = new List<KeyValuePair<Tower, Tower>>();
+            foreach (var x in towers)
+                ret.AddRange(WgsDis.Solve(x.ToList()));
+            ret = ret.Where(x => x.Key.Status != TowerStatus.预选 && x.Value.Status != TowerStatus.预选).ToList();
+            if (raw.HasValue && raw.Value == true)
+                return XlsView(ret, "export.xls", "~/Views/Tower/ExportShare.cshtml");
+            else
+                return View(ret); 
+        }
+
+        public IActionResult NewAP([FromServices] WgsDis WgsDis, bool? raw)
+        {
+            var towers = DB.Towers
+                .GroupBy(x => x.District)
+                .ToList();
+            var ret = new List<KeyValuePair<Tower, Tower>>();
+            foreach (var x in towers)
+                ret.AddRange(WgsDis.Solve(x.ToList()));
+            ret = ret.Where(x => x.Key.Status == TowerStatus.预选 || x.Value.Status == TowerStatus.预选).ToList();
+            if (raw.HasValue && raw.Value == true)
+                return XlsView(ret, "export.xls", "~/Views/Tower/ExportNewAP.cshtml");
+            else
+                return View(ret);
+        }
+
+        public IActionResult Suggest([FromServices]IConfiguration Config)
+        {
+            var source = DB.Towers
+                .GroupBy(x => x.District)
+                .ToList();
+            var ret = new List<Models.Suggest>();
+            foreach (var x in source)
+                ret.AddRange(Algorithms.Suggest.SuggestPositions(x.Select(y => new Position { Lat = y.Lat, Lon = y.Lon, Radius = GetRadius(y.Scene, Config) }).ToList()).Select(y => new Models.Suggest { Lat = y.Lat, Lon = y.Lon, Radius = y.Radius, Status = TowerStatus.预选 }));
+            return View(ret);
+        }
+
+        private double GetRadius(TowerScene scene, IConfiguration Config)
+        {
+            switch (scene)
+            {
+                case TowerScene.一般城区:
+                    return Convert.ToDouble(Config["Settings:Plan:City"]);
+                case TowerScene.密集城区:
+                    return Convert.ToDouble(Config["Settings:Plan:Crowded"]);
+                case TowerScene.郊区:
+                    return Convert.ToDouble(Config["Settings:Plan:Suburb"]);
+                case TowerScene.农村:
+                    return Convert.ToDouble(Config["Settings:Plan:Village"]);
+                default:
+                    return 0;
+            }
+        }
+
+        public IActionResult InitPosition()
+        {
+            if (User.IsInRole("Member"))
+            {
+                var cities = User.Claims.Where(x => x.Type == "有权限访问地市数据").Select(x => x.Value).ToList();
+                if (cities.Count == 0)
+                    goto findfirst;
+                var ret = DB.Towers.Where(x => x.City == cities.First()).First();
+                return Json(new { Lat = ret.Lat, Lon = ret.Lon });
+            }
+            findfirst:
+            var tower = DB.Towers.First();
+            return Json(new { Lat = tower.Lat, Lon = tower.Lon });
         }
     }
 }

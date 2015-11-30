@@ -1,0 +1,45 @@
+﻿@model IEnumerable<KeyValuePair<Tower, Tower>>
+@{ 
+    ViewBag.Title = "整合分析";
+}
+
+<div class="clearfix">
+    <h4>整合分析</h4>
+</div>
+<div class="row">
+    <div class="col-lg-12">
+        <section class="panel">
+            <header class="panel-heading">可整合的基站</header>
+            <a href="?raw=true" class="btn btn-primary btn-small">导出Excel</a>
+            <div class="pull-out m-t-small">
+                <table class="table table-striped b-t text-small">
+                    <thead>
+                        <tr>
+                            <th>城市</th>
+                            <th>地区</th>
+                            <th>铁塔1</th>
+                            <th>铁塔2</th>
+                            <th>距离</th>
+                            <th>操作</th>
+                        </tr>
+                    </thead>
+                    <tbody class="lst-towers">
+                        @foreach (var x in Model)
+                        {
+                            <tr>
+                                <td>@x.Key.City</td>
+                                <td>@x.Key.District</td>
+                                <td>@x.Key.Name</td>
+                                <td>@x.Value.Name</td>
+                                <td>@ChinaTower.StationPlanning.Algorithms.Suggest.GetDistance(x.Key.Lat, x.Key.Lon, x.Value.Lat, x.Value.Lon).ToString("0.00") 米</td>
+                                <td>
+                                    <a href="/map?lat=@x.Key.Lat&lon=@x.Key.Lon">在地图上查看</a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </div>
+</div>

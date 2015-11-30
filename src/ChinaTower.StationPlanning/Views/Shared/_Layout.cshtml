@@ -54,15 +54,43 @@
     <nav id="nav" class="nav-primary visible-lg nav-vertical">
         <ul class="nav" data-spy="affix" data-offset-top="50">
             <li class="active"><a asp-action="Index" asp-controller="Home"><i class="fa-dashboard fa fa-lg"></i>概况</a></li>
-            <li><a asp-action="Index" asp-controller="Map"><i class="fa-map-o fa fa-lg"></i>地图展示</a></li>
+            @if (ViewContext.RouteData.Values["controller"].ToString() == "Map" && ViewContext.RouteData.Values["action"].ToString() == "Index")
+            {
+                <li class="dropdown-submenu">
+                    <a href="#"><i class="fa-map-o fa fa-lg"></i>地图展示</a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <div class="nav-chk">
+                                <input id="chkRxlev" checked type="checkbox" onclick="BuildOverlays()" />
+                                路测信号
+                            </div>
+                        </li>
+                        <li><div class="nav-chk"><input id="chkNormal" checked type="checkbox" onclick="BuildOverlays()" /> 正常铁塔</div></li>
+                        <li><div class="nav-chk"><input id="chkStock" type="checkbox" onclick="BuildOverlays()" /> 储备铁塔</div></li>
+                        <li><div class="nav-chk"><input id="chkHard" type="checkbox" onclick="BuildOverlays()" /> 难点铁塔</div></li>
+                        <li><div class="nav-chk"><input id="chkPlan" checked type="checkbox" onclick="BuildOverlays()" /> 预选铁塔</div></li>
+                        <li><div class="nav-chk"><input id="chkSuggest" type="checkbox" onclick="BuildOverlays()" /> 主动规划铁塔</div></li>
+                        <li><div class="nav-chk"><input id="chkShare" type="checkbox" onclick="BuildOverlays()" /> 整合标识</div></li>
+                        <li><div class="nav-chk"><input id="chkNewShare" checked type="checkbox" onclick="BuildOverlays()" /> 新建整合标识</div></li>
+                        <li><div class="nav-chk"><input id="chkSimulate" type="checkbox" onclick="BuildOverlays()" /> 非预选仿真</div></li>
+                        <li><div class="nav-chk"><input id="chkPreSimulate" checked type="checkbox" onclick="BuildOverlays()" /> 预选仿真</div></li>
+                        <li><div class="nav-chk"><input id="chkCT" checked type="checkbox" onclick="BuildOverlays()" /> 中国电信</div></li>
+                        <li><div class="nav-chk"><input id="chkCM" checked type="checkbox" onclick="BuildOverlays()" /> 中国移动</div></li>
+                        <li><div class="nav-chk"><input id="chkCU" checked type="checkbox" onclick="BuildOverlays()" /> 中国联通</div></li>                    </ul>
+                </li>
+            }
+            else
+            {
+                <li><a asp-action="Index" asp-controller="Map"><i class="fa-map-o fa fa-lg"></i>地图展示</a></li>
+            }
             <li><a asp-action="Index" asp-controller="Tower"><i class="fa-map-signs fa fa-lg"></i>铁塔管理</a></li>
             <li class="dropdown-submenu">
                 <a href="#"><i class="fa-map-marker fa fa-lg"></i>规划分析</a>
                 <ul class="dropdown-menu">
-                    <li><a href="buttons.html">整合分析</a></li>
-                    <li><a href="icons.html"><b class="badge pull-right">302</b>新建分析</a></li>
-                    <li><a href="grid.html">主动规划</a></li>
-                    <li><a href="widgets.html"><b class="badge bg-primary pull-right">8</b>关联性分析</a></li>
+                    <li><a asp-controller="Tower" asp-action="Share">整合分析</a></li>
+                    <li><a asp-controller="Tower" asp-action="NewAP">新建分析</a></li>
+                    <li><a asp-controller="Tower" asp-action="Suggest">主动规划</a></li>
+                    <li><a asp-controller="Tower" asp-action="Relation">关联性分析</a></li>
                 </ul>
             </li>
             <li><a asp-action="Index" asp-controller="Pavement"><i class="fa-car fa fa-lg"></i>路测分析</a></li>

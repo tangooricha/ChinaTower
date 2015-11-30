@@ -1,0 +1,16 @@
+﻿{
+  "Settings": {
+    "Plan": {
+      "Suburb": 500,
+      "Crowded": 250,
+      "Village": 2000,
+      "City": 350
+    },
+    "Share": {
+      "Suburb": 500,
+      "Crowded": 150,
+      "Village": 2000,
+      "City": 300
+    }
+  }
+}

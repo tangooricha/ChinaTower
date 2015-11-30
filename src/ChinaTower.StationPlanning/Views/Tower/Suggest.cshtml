@@ -1,0 +1,37 @@
+﻿@model IEnumerable<Suggest>
+@{ 
+    ViewBag.Title = "整合分析";
+}
+
+<div class="clearfix">
+    <h4>主动规划</h4>
+</div>
+<div class="row">
+    <div class="col-lg-12">
+        <section class="panel">
+            <header class="panel-heading">建议建站位置</header>
+            <a href="?raw=true" class="btn btn-primary btn-small">导出Excel</a>
+            <div class="pull-out m-t-small">
+                <table class="table table-striped b-t text-small">
+                    <thead>
+                        <tr>
+                            <th>经度</th>
+                            <th>纬度</th>
+                            <th>半径</th>
+                        </tr>
+                    </thead>
+                    <tbody class="lst-towers">
+                        @foreach (var x in Model)
+                        {
+                            <tr>
+                                <td>@x.Lat</td>
+                                <td>@x.Lon</td>
+                                <td>@x.Radius</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </div>
+</div>

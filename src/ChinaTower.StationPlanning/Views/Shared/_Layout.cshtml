@@ -53,10 +53,10 @@
     <!-- nav -->
     <nav id="nav" class="nav-primary visible-lg nav-vertical">
         <ul class="nav" data-spy="affix" data-offset-top="50">
-            <li class="active"><a asp-action="Index" asp-controller="Home"><i class="fa-dashboard fa fa-lg"></i>概况</a></li>
+            <li @(ViewContext.RouteData.Values["controller"].ToString() == "Home" ? "class=\"active\"" : "")><a asp-action="Index" asp-controller="Home"><i class="fa-dashboard fa fa-lg"></i>概况</a></li>
             @if (ViewContext.RouteData.Values["controller"].ToString() == "Map" && ViewContext.RouteData.Values["action"].ToString() == "Index")
             {
-                <li class="dropdown-submenu">
+                <li class="dropdown-submenu active">
                     <a href="#"><i class="fa-map-o fa fa-lg"></i>地图展示</a>
                     <ul class="dropdown-menu">
                         <li>
@@ -83,8 +83,8 @@
             {
                 <li><a asp-action="Index" asp-controller="Map"><i class="fa-map-o fa fa-lg"></i>地图展示</a></li>
             }
-            <li><a asp-action="Index" asp-controller="Tower"><i class="fa-map-signs fa fa-lg"></i>铁塔管理</a></li>
-            <li class="dropdown-submenu">
+            <li @(ViewContext.RouteData.Values["controller"].ToString() == "Tower" && ViewContext.RouteData.Values["action"].ToString() == "Index" ? "class=\"active\"" : "")><a asp-action="Index" asp-controller="Tower"><i class="fa-map-signs fa fa-lg"></i>铁塔管理</a></li>
+            <li class="dropdown-submenu @(ViewContext.RouteData.Values["action"].ToString() == "Share" || ViewContext.RouteData.Values["action"].ToString() == "NewAP" || ViewContext.RouteData.Values["action"].ToString() == "Suggest" || ViewContext.RouteData.Values["action"].ToString() == "Relation" ? "active" : "")">
                 <a href="#"><i class="fa-map-marker fa fa-lg"></i>规划分析</a>
                 <ul class="dropdown-menu">
                     <li><a asp-controller="Tower" asp-action="Share">整合分析</a></li>
@@ -93,10 +93,10 @@
                     <li><a asp-controller="Tower" asp-action="Relation">关联性分析</a></li>
                 </ul>
             </li>
-            <li><a asp-action="Index" asp-controller="Pavement"><i class="fa-car fa fa-lg"></i>路测分析</a></li>
-            <li><a asp-action="Index" asp-controller="Pano"><i class="fa-camera fa fa-lg"></i>实景勘察</a></li>
-            <li><a asp-action="Index" asp-controller="Account"><i class="fa-users fa fa-lg"></i>用户管理</a></li>
-            <li><a asp-action="Index" asp-controller="Setting"><i class="fa-cog fa fa-lg"></i>系统管理</a></li>
+            <li @(ViewContext.RouteData.Values["controller"].ToString() == "Pavement" ? "class=\"active\"" : "")><a asp-action="Index" asp-controller="Pavement"><i class="fa-car fa fa-lg"></i>路测分析</a></li>
+            <li @(ViewContext.RouteData.Values["controller"].ToString() == "Pano" ? "class=\"active\"" : "")><a asp-action="Index" asp-controller="Pano"><i class="fa-camera fa fa-lg"></i>实景勘察</a></li>
+            <li @(ViewContext.RouteData.Values["controller"].ToString() == "Account" ? "class=\"active\"" : "")><a asp-action="Index" asp-controller="Account"><i class="fa-users fa fa-lg"></i>用户管理</a></li>
+            <li @(ViewContext.RouteData.Values["controller"].ToString() == "Setting" ? "class=\"active\"" : "")><a asp-action="Index" asp-controller="Setting"><i class="fa-cog fa fa-lg"></i>系统管理</a></li>
         </ul>
     </nav>
     <!-- / nav -->

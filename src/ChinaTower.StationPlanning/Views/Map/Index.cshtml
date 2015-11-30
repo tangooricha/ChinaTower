@@ -400,14 +400,14 @@
                 if ($('#chkShare').is(':checked') || $('#chkNewShare').is(':checked'))
                     $.getJSON('/tower/sharing', { left: left, right: right, top: top, bottom: bottom }, function (lines) {
                         for (var i = 0; i < lines.length; i++) {
-                            if (lines[i].begin.status == '预选' && lines[i].end.status == '预选'  && $('#chkNewShare').is(':checked') || (lines[i].begin.status == '正常' || lines[i].end.status == '正常') && $('#chkShare').is(':checked')) {
+                            if (lines[i].Status == '预选' && $('#chkNewShare').is(':checked') || lines[i].Status == '正常' && $('#chkShare').is(':checked')) {
                                 var points = [];
-                                var result = GPS.wgs_to_bd(lines[i].begin.lat, lines[i].begin.lon);
+                                var result = GPS.wgs_to_bd(lines[i].BeginLat, lines[i].BeginLon);
                                 points.push(new BMap.Point(result.lon, result.lat));
                                 result = GPS.wgs_to_bd(lines[i].end.lat, lines[i].end.lon);
                                 points.push(new BMap.Point(result.lon, result.lat));
                                 var polyline = new BMap.Polyline(points, {
-                                    strokeColor: lines[i].begin.status == '预选' || lines[i].end.status == '预选' ? 'purple' : 'blue',
+                                    strokeColor: lines[i].Status == '预选' ? 'purple' : 'blue',
                                     strokeWeight: 5,
                                     strokeOpacity: 1
                                 });

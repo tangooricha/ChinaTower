@@ -1,0 +1,35 @@
+﻿@model IEnumerable<Tower>
+@{
+    Layout = null;
+}
+<table>
+    <tr>
+        <td>城市</td>
+        <td>地区</td>
+        <td>名称</td>
+        <td>地址</td>
+        <td>经度</td>
+        <td>纬度</td>
+        <td>产权</td>
+        <td>塔型</td>
+        <td>高度</td>
+        <td>场景</td>
+        <td>属性</td>
+    </tr>
+    @foreach (var x in Model)
+    { 
+        <tr>
+            <td>@x.City</td>
+            <td>@x.District</td>
+            <td>@x.Name</td>
+            <td>@x.Address</td>
+            <td>@x.Lat</td>
+            <td>@x.Lon</td>
+            <td>@x.Provider</td>
+            <td>@x.Type</td>
+            <td>@x.Height</td>
+            <td>@x.Scene</td>
+            <td>@x.Status</td>
+        </tr>
+    }
+</table>

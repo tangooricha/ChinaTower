@@ -7,6 +7,7 @@ using Microsoft.AspNet.Mvc;
 using Microsoft.AspNet.Authorization;
 using Microsoft.AspNet.Http;
 using ChinaTower.StationPlanning.Models;
+using ChinaTower.StationPlanning.Algorithms;
 
 namespace ChinaTower.StationPlanning.Controllers
 {
@@ -29,8 +30,25 @@ namespace ChinaTower.StationPlanning.Controllers
                 towers = towers.Where(x => x.Status == status.Value);
             if (provider.HasValue)
                 towers = towers.Where(x => x.Provider == provider.Value);
-            var pi = ViewData["PagerInfo"] as PagerInfo;
             return PagedView(towers);
+        }
+
+        public IActionResult Export(string name, string city, string district, TowerType? type, TowerStatus? status, Provider? provider)
+        {
+            IEnumerable<Tower> towers = DB.Towers;
+            if (!string.IsNullOrEmpty(name))
+                towers = towers.Where(x => x.Name.Contains(name) || name.Contains(x.Name));
+            if (!string.IsNullOrEmpty(city))
+                towers = towers.Where(x => x.City.Contains(city) || city.Contains(x.City));
+            if (!string.IsNullOrEmpty(district))
+                towers = towers.Where(x => x.District.Contains(district) || district.Contains(x.District));
+            if (type.HasValue)
+                towers = towers.Where(x => x.Type == type.Value);
+            if (status.HasValue)
+                towers = towers.Where(x => x.Status == status.Value);
+            if (provider.HasValue)
+                towers = towers.Where(x => x.Provider == provider.Value);
+            return XlsView(towers.ToList());
         }
 
         public IActionResult Tower(double? left, double? right, double? top, double? bottom)
@@ -149,12 +167,102 @@ namespace ChinaTower.StationPlanning.Controllers
         }
 
         [HttpPost]
+        public string DeleteMulti(string ids)
+        {
+            var tmp = ids.Split(' ');
+            foreach(var y in tmp)
+            {
+                var id = Guid.Parse(y);
+                var tower = DB.Towers.Where(x => x.Id == id).Single();
+                DB.Towers.Remove(tower);
+                DB.SaveChanges();
+            }
+            return "ok";
+        }
+
+        [HttpPost]
         public string Delete(Guid id)
         {
             var tower = DB.Towers.Where(x => x.Id == id).Single();
             DB.Towers.Remove(tower);
             DB.SaveChanges();
             return "ok";
+        }
+
+        [HttpPost]
+        public IActionResult Edit(Guid id, Tower Model, IFormFile file)
+        {
+            var tower = DB.Towers.Where(x => x.Id == id).Single();
+            tower.Name = Model.Name;
+            tower.Lat = Model.Lat;
+            tower.Lon = Model.Lon;
+            tower.Address = Model.Address;
+            tower.City = Model.City;
+            tower.District = Model.District;
+            tower.Height = Model.Height;
+            tower.Type = Model.Type;
+            tower.Status = Model.Status;
+            tower.Url = Model.Url;
+            tower.Provider = Model.Provider;
+            tower.Scene = Model.Scene;
+            if (file != null)
+            {
+                var blob = new Blob
+                {
+                    ContentLength = file.Length,
+                    ContentType = file.ContentType,
+                    FileName = file.GetFileName(),
+                    Time = DateTime.Now,
+                    File = file.ReadAllBytes()
+                };
+                DB.Blobs.Add(blob);
+                tower.BlobId = blob.Id;
+            }
+            DB.SaveChanges();
+            return Prompt(x =>
+            {
+                x.Title = "修改成功";
+                x.Details = "铁塔信息已修改成功！";
+            });
+        }
+
+        public IActionResult Create(Tower Model, IFormFile file)
+        {
+            Model.Time = DateTime.Now;
+            if (file != null)
+            {
+                var blob = new Blob
+                {
+                    ContentLength = file.Length,
+                    ContentType = file.ContentType,
+                    FileName = file.GetFileName(),
+                    Time = DateTime.Now,
+                    File = file.ReadAllBytes()
+                };
+                DB.Blobs.Add(blob);
+                Model.BlobId = blob.Id;
+            }
+            DB.Towers.Add(Model);
+            return RedirectToAction("Index", "Map", new { lon = Model.Lon, lat = Model.Lat });
+        }
+
+        public IActionResult Sharing(double left, double right, double top, double bottom, [FromServices] WgsDis WgsDis)
+        {
+            var towers = DB.Towers
+                .Where(x => x.Lon >= left)
+                .Where(x => x.Lon <= right)
+                .Where(x => x.Lat >= bottom)
+                .Where(x => x.Lat <= top)
+                .ToList();
+            var ret = WgsDis.Solve(towers);
+            return Json(ret.Select(x => new
+            {
+                BeginLat = x.Key.Lat,
+                EndLat = x.Value.Lat,
+                BeginLon = x.Key.Lon,
+                EndLon = x.Value.Lon,
+                Status = x.Key.Status
+            }));
         }
     }
 }

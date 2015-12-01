@@ -318,7 +318,7 @@
                                 color = 'blue';
                             if (towers[i].Status == '预选' && !towers[i].Name)
                                 color = 'red';
-                            circle = new BMap.Circle(pt, towers[i].Radius * 1000, { fillColor: color, strokerColor: towers[i].status == '预选' ? 'red' : 'green', strokerWeight: 0.01, fillOpacity: 0.1, strokeOpacity: 0.01 });
+                            circle = new BMap.Circle(pt, towers[i].Radius, { fillColor: color, strokerColor: towers[i].status == '预选' ? 'red' : 'green', strokerWeight: 0.01, fillOpacity: 0.1, strokeOpacity: 0.01 });
                             if (!towers[i].Name && $('#chkSuggest').is(':checked'))
                                 map.addOverlay(circle);
                             else if (towers[i].Status == '预选' && $('#chkPreSimulate').is(':checked'))

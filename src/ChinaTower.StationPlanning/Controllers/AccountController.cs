@@ -15,6 +15,11 @@ namespace ChinaTower.StationPlanning.Controllers
 {
     public class AccountController : BaseController
     {
+        public IActionResult Index()
+        {
+            return View(UserManager.Users.ToList());
+        }
+
         [HttpGet]
         public IActionResult Login()
         {

@@ -99,7 +99,7 @@ namespace ChinaTower.StationPlanning.Controllers
             }
         }
 
-        public IActionResult Position(double? left, double? right, double? top, double? bottom, int? year, int? month)
+        public IActionResult Position(double? left, double? right, double? top, double? bottom, int? year, int? month, [FromServices]IConfiguration Config)
         {
             IEnumerable<Tower> towers = DB.Towers;
             if (right.HasValue && right - left > 1.188078574995771)
@@ -128,7 +128,15 @@ namespace ChinaTower.StationPlanning.Controllers
                         .ToList();
                     towers = towers.Where(x => claims.Contains(x.City));
                 }
-                return Json(towers.ToList());
+
+                towers = towers.ToList();
+                var ret = new List<Models.Suggest>();
+                foreach (var x in towers)
+                    x.Radius = GetShareRadius(x.Scene, Config);
+                foreach (var x in towers.GroupBy(x => x.District).Select(x => x.ToList()))
+                    ret.AddRange(Algorithms.Suggest.SuggestPositions(x.Select(y => new Position { Lat = y.Lat, Lon = y.Lon, Radius = GetRadius(y.Scene, Config) }).ToList()).Select(y => new Models.Suggest { Lat = y.Lat, Lon = y.Lon, Radius = y.Radius, Status = TowerStatus.预选 }));
+                (towers as List<Tower>).AddRange(ret.Select(x => new Tower { Status = TowerStatus.预选, Lon = x.Lon, Lat = x.Lat, Radius = x.Radius }));
+                return Json(towers);
             }
         }
 
@@ -356,6 +364,23 @@ namespace ChinaTower.StationPlanning.Controllers
                     return Convert.ToDouble(Config["Settings:Plan:Suburb"]);
                 case TowerScene.农村:
                     return Convert.ToDouble(Config["Settings:Plan:Village"]);
+                default:
+                    return 0;
+            }
+        }
+
+        private double GetShareRadius(TowerScene scene, IConfiguration Config)
+        {
+            switch (scene)
+            {
+                case TowerScene.一般城区:
+                    return Convert.ToDouble(Config["Settings:Share:City"]);
+                case TowerScene.密集城区:
+                    return Convert.ToDouble(Config["Settings:Share:Crowded"]);
+                case TowerScene.郊区:
+                    return Convert.ToDouble(Config["Settings:Share:Suburb"]);
+                case TowerScene.农村:
+                    return Convert.ToDouble(Config["Settings:Share:Village"]);
                 default:
                     return 0;
             }

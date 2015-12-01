@@ -49,5 +49,8 @@ namespace ChinaTower.StationPlanning.Models
         public DateTime Time { get; set; }
 
         public double Height { get; set; }
+
+        [NotMapped]
+        public double Radius { get; set; }
     }
 }

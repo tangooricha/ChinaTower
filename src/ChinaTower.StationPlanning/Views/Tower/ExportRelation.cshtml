@@ -1,0 +1,23 @@
+﻿@model IEnumerable<KeyValuePair<Tower, Tower>>
+@{ 
+    Layout = null;
+}
+<table>
+    <tr>
+        <th>城市</th>
+        <th>地区</th>
+        <th>铁塔1</th>
+        <th>铁塔2</th>
+        <th>距离</th>
+    </tr>
+    @foreach (var x in Model)
+    {
+        <tr>
+            <td>@x.Key.City</td>
+            <td>@x.Key.District</td>
+            <td>@x.Key.Name</td>
+            <td>@x.Value.Name</td>
+            <td>@ChinaTower.StationPlanning.Algorithms.Suggest.GetDistance(x.Key.Lat, x.Key.Lon, x.Value.Lat, x.Value.Lon).ToString("0.00") 米</td>
+        </tr>
+    }
+</table>

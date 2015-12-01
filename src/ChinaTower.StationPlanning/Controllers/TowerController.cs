@@ -326,6 +326,21 @@ namespace ChinaTower.StationPlanning.Controllers
                 return View(ret); 
         }
 
+        public IActionResult Relation([FromServices] WgsDis WgsDis, bool? raw)
+        {
+            var towers = DB.Towers
+                .GroupBy(x => x.District)
+                .ToList();
+            var ret = new List<KeyValuePair<Tower, Tower>>();
+            foreach (var x in towers)
+                ret.AddRange(WgsDis.Solve(x.ToList()));
+            ret = ret.Where(x => x.Key.Status == TowerStatus.难点 || x.Value.Status != TowerStatus.难点).ToList();
+            if (raw.HasValue && raw.Value == true)
+                return XlsView(ret, "export.xls", "~/Views/Tower/ExportShare.cshtml");
+            else
+                return View(ret);
+        }
+
         public IActionResult NewAP([FromServices] WgsDis WgsDis, bool? raw)
         {
             var towers = DB.Towers

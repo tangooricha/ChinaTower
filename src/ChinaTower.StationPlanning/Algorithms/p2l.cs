@@ -43,7 +43,7 @@ namespace ChinaTower.StationPlanning.Algorithms
             var ans = new List<RxLevPoint>();
             for (var i = 1; i < t.Count; i++)
             {
-                if (Equ(t[i], ans[ans.Count - 1]))
+                if (ans.Count > 1 && Equ(t[i], ans[ans.Count - 1]))
                     continue;
                 ans.Add(t[i]);
             }
@@ -94,6 +94,15 @@ namespace ChinaTower.StationPlanning.Algorithms
             }
             if (now != last)
                 ans.Add(new RxLevLine { BeginLat = t[now].Lat, BeginLon = t[now].Lon, EndLat = t[last].Lat, EndLon = t[last].Lon, Color = color });
+            return ans;
+        }
+        public static IList<RxLevLine> Handle(IList<RxLevPoint> t)
+        {
+            if (t.Count > 20)
+                L = Dis2(t[0], t[20]);
+            var tmp = Pre(t);
+            var ans = Solve(tmp);
+            ans = Merge(ans);
             return ans;
         }
     }

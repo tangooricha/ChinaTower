@@ -8,7 +8,7 @@ using Microsoft.AspNet.Authorization;
 namespace ChinaTower.StationPlanning.Controllers
 {
     [Authorize]
-    public class MapController : Controller
+    public class MapController : BaseController
     {
         // GET: /<controller>/
         public IActionResult Index()

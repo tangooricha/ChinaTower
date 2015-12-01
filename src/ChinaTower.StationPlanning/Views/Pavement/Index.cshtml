@@ -1,0 +1,50 @@
+﻿@model IEnumerable<DateTime>
+@{ 
+    ViewBag.Title = "路测分析";
+}
+
+<div class="clearfix">
+    <h4>路测分析</h4>
+</div>
+<div class="row">
+    <div class="col-lg-12">
+        <section class="panel">
+            <header class="panel-heading">RxLev 列表</header>
+            <form asp-action="Import" asp-controller="Pavement" method="post" enctype="multipart/form-data">
+                <input type="file" style="display: inline" name="file" />
+                <input type="submit" class="btn btn-small btn-primary" value="导入" />
+            </form>
+            <div class="pull-out m-t-small">
+                <table class="table table-striped b-t text-small">
+                    <thead>
+                        <tr>
+                            <th>日期</th>
+                            <th>操作</th>
+                        </tr>
+                    </thead>
+                    <tbody class="lst-towers">
+                        @foreach (var x in Model)
+                        {
+                            <tr>
+                                <td>@x.Year 年 @x.Month 月</td>
+                                <td><a class="btn btn-small btn-danger" href="javascript:Delete(@x.Year, @x.Month)">删除</a></td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </div>
+</div>
+<form asp-action="Remove" asp-controller="Pavement" method="post" id="frmRemoveSignal">
+    <input type="hidden" id="month" name="month" />
+    <input type="hidden" id="year" name="year" />
+</form>
+<script>
+    function Delete(year, month)
+    {
+        $('#month').val(month);
+        $('#year').val(year);
+        $('#frmRemoveSignal').submit();
+    }
+</script>

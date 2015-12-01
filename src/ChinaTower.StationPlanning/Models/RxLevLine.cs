@@ -7,7 +7,7 @@ namespace ChinaTower.StationPlanning.Models
     {
         public Guid Id { get; set; }
 
-        public DateTime Time { get; set; }
+        public DateTime Time { get; set; } = DateTime.Now;
 
         public double BeginLon { get; set; }
         

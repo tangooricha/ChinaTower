@@ -397,8 +397,11 @@ namespace ChinaTower.StationPlanning.Controllers
                 return Json(new { Lat = ret.Lat, Lon = ret.Lon });
             }
             findfirst:
-            var tower = DB.Towers.First();
-            return Json(new { Lat = tower.Lat, Lon = tower.Lon });
+            var tower = DB.Towers.FirstOrDefault();
+            if (tower != null)
+                return Json(new { Lat = tower.Lat, Lon = tower.Lon });
+            else
+                return Json(new { Lat = 123, Lon = 45 });
         }
     }
 }

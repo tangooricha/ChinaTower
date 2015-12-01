@@ -336,7 +336,7 @@ namespace ChinaTower.StationPlanning.Controllers
                 ret.AddRange(WgsDis.Solve(x.ToList()));
             ret = ret.Where(x => x.Key.Status == TowerStatus.难点 || x.Value.Status != TowerStatus.难点).ToList();
             if (raw.HasValue && raw.Value == true)
-                return XlsView(ret, "export.xls", "~/Views/Tower/ExportShare.cshtml");
+                return XlsView(ret, "export.xls", "~/Views/Tower/ExportRelation.cshtml");
             else
                 return View(ret);
         }

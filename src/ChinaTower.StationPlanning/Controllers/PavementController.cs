@@ -71,6 +71,7 @@ namespace ChinaTower.StationPlanning.Controllers
             });
         }
 
+        [HttpPost]
         public IActionResult Remove (int year, int month)
         {
             var lines = DB.RxLevLines.Where(x => x.Time.Year == year && x.Time.Month == month).ToList();

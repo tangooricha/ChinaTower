@@ -369,7 +369,7 @@
                                 var wgspos = GPS.bd_to_wgs(e.point.lat, e.point.lng);
                                 $.post('/tower/modifypos', { lon: wgspos.lon, lat: wgspos.lat, id: e.target._id });
                                 var newpos = { lat: e.point.lat, lon: e.point.lng };
-                                var _circle = new BMap.Circle(new BMap.Point(newpos.lon, newpos.lat), e.target.radius * 1000, { fillColor: 'blue', strokerColor: 'red', strokerWeight: 0.01, fillOpacity: 0.1, strokeOpacity: 0.01 });
+                                var _circle = new BMap.Circle(new BMap.Point(newpos.lon, newpos.lat), e.target.radius, { fillColor: 'blue', strokerColor: 'red', strokerWeight: 0.01, fillOpacity: 0.1, strokeOpacity: 0.01 });
                                 e.target.simulate = _circle;
                                 map.addOverlay(e.target.simulate);
                             });

@@ -36,6 +36,12 @@ namespace ChinaTower.StationPlanning.Controllers
             return View(user);
         }
 
+        [HttpGet]
+        public IActionResult Create()
+        {
+            return View();
+        }
+
         [HttpPost]
         public async Task<IActionResult> Create(string username, string role, string cities, string password)
         {
@@ -44,6 +50,8 @@ namespace ChinaTower.StationPlanning.Controllers
             await UserManager.AddToRoleAsync(user, role);
             if (role == "Member")
             {
+                if (cities == null)
+                    cities = "";
                 var c = cities.Split(' ');
                 foreach (var x in c)
                     await UserManager.AddClaimAsync(user, new Claim("有权限访问地市数据", x));

@@ -1,0 +1,54 @@
+﻿@inject Microsoft.Extensions.Configuration.IConfiguration Config
+@{ 
+    ViewBag.Title = "参数设定";
+}
+<div class="clearfix">
+    <h4>参数设定</h4>
+</div>
+<div class="row">
+    <form asp-action="Index" asp-controller="Setting" class="col-lg-12">
+        <h3>整合分析参数</h3>
+        <table class="create-user">
+            <tr>
+                <td class="td-gray">郊区半径(米) </td>
+                <td><input type="text" name="suburb" value="@Config["Settings:Share:Suburb"]" class="form-control" /></td>
+            </tr>
+            <tr>
+                <td class="td-gray">密集城区半径(米) </td>
+                <td><input type="text" name="crowded" value="@Config["Settings:Share:Crowded"]" class="form-control" /></td>
+            </tr>
+            <tr>
+                <td class="td-gray">农村半径(米)</td>
+                <td><input type="text" name="village" value="@Config["Settings:Share:Village"]" class="form-control" /></td>
+            </tr>
+            <tr>
+                <td class="td-gray">一般城区半径(米) </td>
+                <td><input type="text" name="city" value="@Config["Settings:Share:City"]" class="form-control" /></td>
+            </tr>
+        </table>
+        <br />
+        <h3>新建分析参数</h3>
+        <table class="create-user">
+            <tr>
+                <td class="td-gray">郊区半径(米) </td>
+                <td><input type="text" name="_suburb" value="@Config["Settings:Plan:Suburb"]" class="form-control" /></td>
+            </tr>
+            <tr>
+                <td class="td-gray">密集城区半径(米) </td>
+                <td><input type="text" name="_crowded" value="@Config["Settings:Plan:Crowded"]" class="form-control" /></td>
+            </tr>
+            <tr>
+                <td class="td-gray">农村半径(米)</td>
+                <td><input type="text" name="_village" value="@Config["Settings:Plan:Village"]" class="form-control" /></td>
+            </tr>
+            <tr>
+                <td class="td-gray">一般城区半径(米) </td>
+                <td><input type="text" name="_city" value="@Config["Settings:Plan:City"]" class="form-control" /></td>
+            </tr>
+        </table>
+        <br />
+        <p>
+            <input type="submit" value="保存" class="btn btn-primary" />
+        </p>
+    </form>
+</div>

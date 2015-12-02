@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Net;
 using System.IO;
+using System.Security.Claims;
 using Microsoft.AspNet.Http;
 using Microsoft.AspNet.Authorization;
 using Microsoft.AspNet.Mvc;
@@ -95,9 +96,10 @@ namespace ChinaTower.StationPlanning.Controllers
                 return File(avatar.File, avatar.ContentType, avatar.FileName);
         }
 
+        [HttpPost]
         public async Task<IActionResult> Delete(string id)
         {
-            if(!User.IsInRole("Root, Master"))
+            if(!User.AnyRoles("Root, Master"))
                 return Prompt(x =>
                 {
                     x.Title = "删除失败";

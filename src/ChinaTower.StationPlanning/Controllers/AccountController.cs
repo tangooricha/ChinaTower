@@ -21,6 +21,43 @@ namespace ChinaTower.StationPlanning.Controllers
         }
 
         [HttpGet]
+        public async Task<IActionResult> Edit(string id)
+        {
+            var user = UserManager.Users.Where(x => x.Id == id).Single();
+            var cities = (await UserManager.GetClaimsAsync(user))
+                .Where(x => x.Type == "有权限访问地市数据")
+                .Select(x => x.Value)
+                .ToList();
+            var citiesstr = "";
+            foreach (var x in cities)
+                citiesstr += x + " ";
+            ViewBag.Cities = citiesstr.Trim();
+            return View(user);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(string id, User Model, string password, string cities)
+        {
+            var user = UserManager.Users.Where(x => x.Id == id).Single();
+            var claims = await UserManager.GetClaimsAsync(user);
+            foreach (var x in claims)
+                await UserManager.RemoveClaimAsync(user, x);
+            foreach (var x in cities.Trim().Split(' '))
+                if (!string.IsNullOrEmpty(x))
+                    await UserManager.AddClaimAsync(user, new System.Security.Claims.Claim("有权限访问地市数据", x));
+            if (!string.IsNullOrEmpty(password))
+            {
+                var token = await UserManager.GeneratePasswordResetTokenAsync(user);
+                await UserManager.ResetPasswordAsync(user, token, password);
+            }
+            return Prompt(x => 
+            {
+                x.Title = "修改成功";
+                x.Details = "用户修改成功";
+            });
+        }
+
+        [HttpGet]
         public IActionResult Login()
         {
             return View();

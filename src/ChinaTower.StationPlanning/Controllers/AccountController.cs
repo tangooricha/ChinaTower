@@ -37,6 +37,21 @@ namespace ChinaTower.StationPlanning.Controllers
         }
 
         [HttpPost]
+        public async Task<IActionResult> Create(string username, string role, string cities, string password)
+        {
+            var user = new User { UserName = username };
+            await UserManager.CreateAsync(user);
+            await UserManager.AddToRoleAsync(user, role);
+            if (role == "Member")
+            {
+                var c = cities.Split(' ');
+                foreach (var x in c)
+                    await UserManager.AddClaimAsync(user, new Claim("有权限访问地市数据", x));
+            }
+            return RedirectToAction("Index", "Account");
+        }
+
+        [HttpPost]
         public async Task<IActionResult> Edit(string id, User Model, string password, string cities)
         {
             var user = UserManager.Users.Where(x => x.Id == id).Single();

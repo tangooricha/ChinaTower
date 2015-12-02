@@ -1,0 +1,38 @@
+﻿@{ 
+    ViewBag.Title = "创建用户";
+}
+
+<div class="clearfix">
+    <h4>用户管理</h4>
+</div>
+<div class="row">
+    <form asp-action="Create" asp-controller="Account" class="col-lg-12">
+        <table class="create-user">
+            <tr>
+                <td class="td-gray">用户名</td>
+                <td><input type="text" name="username" placeholder="用空格分割城市" value="@ViewBag.Cities" class="form-control" /></td>
+            </tr>
+            <tr>
+                <td class="td-gray">角色</td>
+                <td>
+                    <select name="role"  class="form-control">
+                        <option value="Master">管理员</option>
+                        <option value="Member">普通用户</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td class="td-gray">权限</td>
+                <td><input type="text" name="cities" placeholder="用空格分割城市，用户角色为管理员则无需填写此项" value="@ViewBag.Cities" class="form-control" /></td>
+            </tr>
+            <tr>
+                <td class="td-gray">密码</td>
+                <td><input type="password" name="password" placeholder="不修改请留空" class="form-control" /></td>
+            </tr>
+        </table>
+        <br />
+        <p>
+            <input type="submit" value="创建" class="btn btn-primary" />
+        </p>
+    </form>
+</div>

@@ -94,5 +94,26 @@ namespace ChinaTower.StationPlanning.Controllers
             else
                 return File(avatar.File, avatar.ContentType, avatar.FileName);
         }
+
+        public async Task<IActionResult> Delete(string id)
+        {
+            if(!User.IsInRole("Root, Master"))
+                return Prompt(x =>
+                {
+                    x.Title = "删除失败";
+                    x.Details = "权限不足";
+                });
+            if (id == User.Current.Id)
+                return Prompt(x =>
+                {
+                    x.Title = "删除失败";
+                    x.Details = "你不能将自己的账号删除";
+                });
+            await UserManager.DeleteAsync(await UserManager.FindByIdAsync(id));
+            return Prompt(x => {
+                x.Title = "删除成功";
+                x.Details = "该用户已被删除";
+            });
+        }
     }
 }

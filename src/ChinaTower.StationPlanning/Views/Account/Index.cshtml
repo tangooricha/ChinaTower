@@ -26,7 +26,10 @@
                                 <td>@x.UserName</td>
                                 <td>@x.Email</td>
                                 <td>@foreach (var y in await User.Manager.GetRolesAsync(x)) { @y @(" ") } </td>
-                                <td><a asp-action="Edit" asp-controller="Account" asp-route-id="@x.Id">编辑</a></td>
+                                <td>
+                                    <a asp-action="Edit" asp-controller="Account" asp-route-id="@x.Id">编辑</a>
+                                    <a href="javascript:Delete('@x.Id');">删除</a>
+                                </td>
                             </tr>
                         }
                     </tbody>
@@ -35,3 +38,13 @@
         </section>
     </div>
 </div>
+<form id="frmRemoveUser" asp-action="Delete" asp-controller="Account">
+    <input type="hidden" name="id" id="userId" />
+</form>
+<script>
+    function Delete(id)
+    {
+        $('#userId').val(id);
+        $('#frmRemoveUser').submit();
+    }
+</script>

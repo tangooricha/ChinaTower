@@ -96,6 +96,16 @@
             </li>
             <li @(ViewContext.RouteData.Values["controller"].ToString() == "Pavement" ? new HtmlString("class=\"active\"") : HtmlString.Empty)><a asp-action="Index" asp-controller="Pavement"><i class="fa-car fa fa-lg"></i>路测分析</a></li>
             <li @(ViewContext.RouteData.Values["controller"].ToString() == "Pano" ? new HtmlString("class=\"active\"") : HtmlString.Empty)><a asp-action="Index" asp-controller="Pano"><i class="fa-camera fa fa-lg"></i>实景勘察</a></li>
+            <li class="dropdown-submenu @(ViewContext.RouteData.Values["controller"].ToString() == "Form" ? "active" : "")">
+                <a href="#"><i class="fa-edit fa fa-lg"></i>表单信息</a>
+                <ul class="dropdown-menu">
+                    <li><a asp-controller="Form" asp-action="A">储备库</a></li>
+                    <li><a asp-controller="Form" asp-action="B">存量资源</a></li>
+                    <li><a asp-controller="Form" asp-action="C">新建站址</a></li>
+                    <li><a asp-controller="Form" asp-action="D">潜在难点库</a></li>
+                    <li><a asp-controller="Form" asp-action="E">在建难点库</a></li>
+                </ul>
+            </li>
             @if (User.AnyRoles("Root, Master"))
             {
                 <li @(ViewContext.RouteData.Values["controller"].ToString() == "Account" ? new HtmlString("class=\"active\"") : HtmlString.Empty)><a asp-action="Index" asp-controller="Account"><i class="fa-users fa fa-lg"></i>用户管理</a></li>

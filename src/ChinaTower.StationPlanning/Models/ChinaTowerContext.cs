@@ -8,6 +8,7 @@ namespace ChinaTower.StationPlanning.Models
         public DbSet<Blob> Blobs { get; set; }
         public DbSet<RxLevLine> RxLevLines { get; set; }
         public DbSet<Tower> Towers { get; set; }
+        public DbSet<Form> Forms { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -41,6 +42,12 @@ namespace ChinaTower.StationPlanning.Models
                 e.HasIndex(x => x.Name);
                 e.HasIndex(x => x.Address);
                 e.HasIndex(x => x.Provider);
+                e.HasIndex(x => x.Time);
+            });
+
+            builder.Entity<Form>(e =>
+            {
+                e.HasIndex(x => x.Type);
                 e.HasIndex(x => x.Time);
             });
         }

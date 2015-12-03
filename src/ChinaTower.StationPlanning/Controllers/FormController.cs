@@ -130,6 +130,38 @@ namespace ChinaTower.StationPlanning.Controllers
             "本周难点进度"
         };
 
+        public static string[] HeaderOfE = new string[]
+        {
+            "序号",
+            "省份",
+            "地市",
+            "区县",
+            "难点站名称",
+            "详细地址",
+            "运营商",
+            "区域类型",
+            "所属场景",
+            "其它场景",
+            "经度",
+            "纬度",
+            "入库时间",
+            "需求批次",
+            "详细难点原因描述",
+            "是否存在协调问题",
+            "协调问题分类",
+            "是否存在建设问题",
+            "建设问题分类",
+            "是否存在其它问题",
+            "其他问题",
+            "难点负责人",
+            "电话",
+            "备注",
+            "难点站址图片",
+            "难点拟解决方案",
+            "难点是否解决",
+            "本周难点进度"
+        };
+
         public IActionResult A()
         {
             var ret = DB.Forms.Where(x => x.Type == Models.FormType.储备库).ToList();

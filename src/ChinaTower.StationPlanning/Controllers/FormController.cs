@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Mvc;
+using Newtonsoft.Json;
 
 namespace ChinaTower.StationPlanning.Controllers
 {
@@ -162,34 +163,87 @@ namespace ChinaTower.StationPlanning.Controllers
             "本周难点进度"
         };
 
-        public IActionResult A()
+        public IActionResult A(bool? raw)
         {
             var ret = DB.Forms.Where(x => x.Type == Models.FormType.储备库).OrderByDescending(x => x.Time);
-            return PagedView(ret);
+            if (raw.HasValue && raw.Value == true)
+                return XlsView(ret.ToList(), "form.xls", "~/Views/Form/Xls.cshtml");
+            else
+                return PagedView(ret);
         }
 
-        public IActionResult B()
+        public IActionResult B(bool? raw)
         {
             var ret = DB.Forms.Where(x => x.Type == Models.FormType.在建难点库).OrderByDescending(x => x.Time);
-            return PagedView(ret);
+            if (raw.HasValue && raw.Value == true)
+                return XlsView(ret.ToList(), "form.xls", "~/Views/Form/Xls.cshtml");
+            else
+                return PagedView(ret);
         }
 
-        public IActionResult C()
+        public IActionResult C(bool? raw)
         {
             var ret = DB.Forms.Where(x => x.Type == Models.FormType.存量资源).OrderByDescending(x => x.Time);
-            return PagedView(ret);
+            if (raw.HasValue && raw.Value == true)
+                return XlsView(ret.ToList(), "form.xls", "~/Views/Form/Xls.cshtml");
+            else
+                return PagedView(ret);
         }
 
-        public IActionResult D()
+        public IActionResult D(bool? raw)
         {
             var ret = DB.Forms.Where(x => x.Type == Models.FormType.新建站址).OrderByDescending(x => x.Time);
-            return PagedView(ret);
+            if (raw.HasValue && raw.Value == true)
+                return XlsView(ret.ToList(), "form.xls", "~/Views/Form/Xls.cshtml");
+            else
+                return PagedView(ret);
         }
 
-        public IActionResult E()
+        public IActionResult E(bool? raw)
         {
             var ret = DB.Forms.Where(x => x.Type == Models.FormType.潜在难点库).OrderByDescending(x => x.Time);
-            return PagedView(ret);
+            if (raw.HasValue && raw.Value == true)
+                return XlsView(ret.ToList(), "form.xls", "~/Views/Form/Xls.cshtml");
+            else
+                return PagedView(ret);
+        }
+
+        [HttpPost]
+        public IActionResult Insert(string[] text, Models.FormType type, string city)
+        {
+
+            DB.Forms.Add(new Models.Form
+            {
+                City = city,
+                Content = JsonConvert.SerializeObject(text),
+                Type = type,
+                Time = DateTime.Now
+            });
+            DB.SaveChanges();
+            return Prompt(x =>
+            {
+                x.Title = "添加成功";
+                x.Details = "表单信息添加成功";
+            });
+        }
+
+        [HttpGet]
+        public IActionResult Edit(Guid id)
+        {
+            return View(DB.Forms.Where(x => x.Id == id).Single());
+        }
+
+        [HttpPost]
+        public IActionResult Edit(Guid id, string[] text)
+        {
+            var form = DB.Forms.Where(x => x.Id == id).Single();
+            form.Content = JsonConvert.SerializeObject(text);
+            DB.SaveChanges();
+            return Prompt(x =>
+            {
+                x.Title = "修改成功";
+                x.Details = "表单信息已保存！";
+            });
         }
     }
 }

@@ -1,0 +1,50 @@
+﻿@model Form
+@{ 
+    ViewBag.Title = "编辑表单";
+}
+
+<div class="clearfix">
+    <h4>编辑表单</h4>
+</div>
+<div class="row">
+    <div class="col-lg-12">
+        <section class="panel">
+            <form asp-action="Edit" asp-controller="Form" asp-route-id="@Model.Id" method="post">
+                <table class="edit-tower">
+                    @{ 
+                        var i = 0;
+                    }
+                    @foreach (var x in Model.Objects)
+                    {
+                        <tr>
+                            <td>
+                                @if (Model.Type == FormType.储备库)
+                                {
+                                    <input type="text" class="form-control" name="text" placeholder="@ChinaTower.StationPlanning.Controllers.FormController.HeaderOfA[i++]" value="@x" />
+                                }
+                                else if (Model.Type == FormType.在建难点库)
+                                {
+                                    <input type="text" class="form-control" name="text" placeholder="@ChinaTower.StationPlanning.Controllers.FormController.HeaderOfB[i++]" value="@x" />
+                                }
+                                else if (Model.Type == FormType.在建难点库)
+                                {
+                                    <input type="text" class="form-control" name="text" placeholder="@ChinaTower.StationPlanning.Controllers.FormController.HeaderOfC[i++]" value="@x" />
+                                }
+                                else if (Model.Type == FormType.在建难点库)
+                                {
+                                    <input type="text" class="form-control" name="text" placeholder="@ChinaTower.StationPlanning.Controllers.FormController.HeaderOfD[i++]" value="@x" />
+                                }
+                                else
+                                {
+                                    <input type="text" class="form-control" name="text" placeholder="@ChinaTower.StationPlanning.Controllers.FormController.HeaderOfE[i++]" value="@x" />
+                                }
+                            </td>
+                        </tr>
+                    }
+                </table>
+                <br />
+                <input type="submit" value="保存" class="btn btn-primary" />
+            </form>
+        </section>
+    </div>
+</div>

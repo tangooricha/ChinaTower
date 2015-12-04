@@ -1,6 +1,6 @@
 ﻿@model IEnumerable<Form>
 @{
-    ViewBag.Title = "储备库表单管理";
+    ViewBag.Title = "存量资源";
 }
 
 <div class="clearfix">
@@ -11,7 +11,7 @@
     <div class="col-lg-8">
         <section class="panel">
             <header class="panel-heading">
-                储备库表单 <a href="?raw=true" style="float:right">导出</a>
+                存量资源 <a href="?raw=true" style="float:right">导出</a>
             </header>
             <div class="pull-out m-t-small" style="overflow-x: auto;white-space:nowrap; text-overflow:ellipsis;">
                 <table class="table table-striped b-t text-small">
@@ -84,7 +84,7 @@
     </div>
 </div>
 <form id="frmDeleteForm" asp-action="Delete" asp-controller="Form">
-    <input type="hidden"id="formId" name="id" />
+    <input type="hidden" id="formId" name="id" />
 </form>
 <script>
     function deleteForm(id)

@@ -164,32 +164,32 @@ namespace ChinaTower.StationPlanning.Controllers
 
         public IActionResult A()
         {
-            var ret = DB.Forms.Where(x => x.Type == Models.FormType.储备库).ToList();
-            return View(ret);
+            var ret = DB.Forms.Where(x => x.Type == Models.FormType.储备库).OrderByDescending(x => x.Time);
+            return PagedView(ret);
         }
 
         public IActionResult B()
         {
-            var ret = DB.Forms.Where(x => x.Type == Models.FormType.储备库).ToList();
-            return View(ret);
+            var ret = DB.Forms.Where(x => x.Type == Models.FormType.在建难点库).OrderByDescending(x => x.Time);
+            return PagedView(ret);
         }
 
         public IActionResult C()
         {
-            var ret = DB.Forms.Where(x => x.Type == Models.FormType.储备库).ToList();
-            return View(ret);
+            var ret = DB.Forms.Where(x => x.Type == Models.FormType.存量资源).OrderByDescending(x => x.Time);
+            return PagedView(ret);
         }
 
         public IActionResult D()
         {
-            var ret = DB.Forms.Where(x => x.Type == Models.FormType.储备库).ToList();
-            return View(ret);
+            var ret = DB.Forms.Where(x => x.Type == Models.FormType.新建站址).OrderByDescending(x => x.Time);
+            return PagedView(ret);
         }
 
         public IActionResult E()
         {
-            var ret = DB.Forms.Where(x => x.Type == Models.FormType.储备库).ToList();
-            return View(ret);
+            var ret = DB.Forms.Where(x => x.Type == Models.FormType.潜在难点库).OrderByDescending(x => x.Time);
+            return PagedView(ret);
         }
     }
 }

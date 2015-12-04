@@ -1,0 +1,72 @@
+﻿@model IEnumerable<Form>
+@{
+    ViewBag.Title = "储备库表单管理";
+}
+
+<div class="clearfix">
+    <h4>储备库表单管理</h4>
+</div>
+
+<div class="row">
+    <div class="col-lg-8">
+        <section class="panel">
+            <header class="panel-heading">
+                储备库表单
+            </header>
+            <div class="pull-out m-t-small" style="overflow-x: auto;white-space:nowrap; text-overflow:ellipsis;">
+                <table class="table table-striped b-t text-small">
+                    <thead>
+                        <tr>
+                            @foreach (var x in ChinaTower.StationPlanning.Controllers.FormController.HeaderOfA)
+                            {
+                                <th>@x</th>
+                            }
+                            <th>操作</th>
+                        </tr>
+                    </thead>
+                    <tbody class="lst-towers">
+                        @foreach (var x in Model)
+                        {
+                            <tr>
+                                @foreach (var y in x.Objects)
+                                {
+                                    <td>@y</td>
+                                }
+                                <td>
+                                    <a class="btn btn-small btn-info" href="javascript:editForm('@x.Id')">编辑</a>
+                                    <a class="btn btn-small btn-danger" href="javascript:deleteForm('@x.Id')">删除</a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+            <footer class="panel-footer">
+                <div class="row">
+                    <div class="col-lg-12 text-right text-center-sm">
+                        @Html.MakePager("", "active", "pagination pagination-small m-t-none m-b-none")
+                    </div>
+                </div>
+            </footer>
+        </section>
+    </div>
+    <div class="col-lg-4">
+        <section class="panel">
+            <header class="panel-heading">
+                创建表单
+            </header>
+            <form asp-action="Insert" asp-controller="Form" asp-route-type="储备库" method="post">
+                <table class="edit-tower">
+                    @foreach (var x in ChinaTower.StationPlanning.Controllers.FormController.HeaderOfA)
+                    {
+                        <tr>
+                            <td><input type="text" name="text" placeholder="@x" class="form-control" /></td>
+                        </tr>
+                    }
+                </table>
+                <br />
+                <input class="btn btn-primary" value="创建" type="submit" />
+            </form>
+        </section>
+    </div>
+</div>

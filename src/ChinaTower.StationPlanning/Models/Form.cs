@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using Newtonsoft.Json;
 
 namespace ChinaTower.StationPlanning.Models
 {
@@ -27,5 +29,11 @@ namespace ChinaTower.StationPlanning.Models
         public DateTime Time { get; set; }
 
         public FormType Type { get; set; }
+
+        [NotMapped]
+        public string[] Objects
+        {
+            get { return JsonConvert.DeserializeObject<string[]>(Content); }
+        }
     }
 }

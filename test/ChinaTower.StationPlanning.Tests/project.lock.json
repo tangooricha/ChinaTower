@@ -6483,7 +6483,7 @@
     },
     "CodeComb.Net.EmailSender/2.0.0-rc1-final": {
       "type": "package",
-      "sha512": "OPALfYP6qFOuHaLmbTQbdWU4HAKBKp7x6gHe5NgkWttgxuwagzEcamqRgU5sypq0MS8qlD6i8p/soaG8mtHn8Q==",
+      "sha512": "FQXF01q1U1zloqyoiUeCEjLDfz8cieewx9e0hDJeHlXBwjdwUyDriN0nc9rssD4ARrpV28bxS7LPCGCGRGjiKw==",
       "files": [
         "CodeComb.Net.EmailSender.2.0.0-rc1-final.nupkg",
         "CodeComb.Net.EmailSender.2.0.0-rc1-final.nupkg.sha512",
@@ -6496,7 +6496,7 @@
     },
     "CodeComb.Package/2.0.0-rc1-final": {
       "type": "package",
-      "sha512": "jTnOO82xjHhg9fRgKZkif/LdJ13gKLABU18BrGcoCVjQqghR5rUVcBV1ns/ijcAKnzD+D+deNMeogs8Su8KAQQ==",
+      "sha512": "8VrRWNehALnMoI6MGtBcncdyy2KYKchho8djScB3VhedpVLGZg3+WSJ9hngYB6McgmFGNbwxDo9Ioe7DvbHkwg==",
       "files": [
         "CodeComb.Package.2.0.0-rc1-final.nupkg",
         "CodeComb.Package.2.0.0-rc1-final.nupkg.sha512",
@@ -6522,7 +6522,7 @@
     },
     "CodeComb.Testing/2.0.0-rc1-final": {
       "type": "package",
-      "sha512": "cZllUbqaQLfr6Mchpq6hIUSdjISxR9KXs3B2YaKEsmP2otTsNLe3ZfkvRHSYuf3DcD2BhvYYulLlV9je1LF15Q==",
+      "sha512": "i6G/sL7jxi4NPc0DS1ckmIIeyP7vSus8U2BLEt1N0e5qvWu0Y05WHJzZ/e2R4ouWO7cwctI3r7gc0e09/u5A8g==",
       "files": [
         "CodeComb.Testing.2.0.0-rc1-final.nupkg",
         "CodeComb.Testing.2.0.0-rc1-final.nupkg.sha512",
@@ -6535,7 +6535,7 @@
     },
     "CodeComb.Testing.Mvc/2.0.0-rc1-final": {
       "type": "package",
-      "sha512": "cHJulG7Tb0Ht+H2totB8qMyOMoShr4P+m3U5syknk/4J859JrewMsqaGb5zHJBmxiJcZbmP26k6xgP25bYDZhA==",
+      "sha512": "enXICqXFU6ZYq4/5OMTJi0F1bD5IbidTgEfvXcxEIFbktl3Dnox4AX8uPm3bU4KWeLQkGpk0BIkIpkoi58//aw==",
       "files": [
         "CodeComb.Testing.Mvc.2.0.0-rc1-final.nupkg",
         "CodeComb.Testing.Mvc.2.0.0-rc1-final.nupkg.sha512",
@@ -7281,7 +7281,7 @@
     },
     "Microsoft.CodeAnalysis.Analyzers/1.0.0": {
       "type": "package",
-      "sha512": "2+V/VDgZu59Thrlp+FQH38H/SmPBegMKsG0ie1ZZyHtx7kJNEozIx/p9zs0UrolX0uyYX7Ouoj3Q3Be15lqXxA==",
+      "sha512": "E7VdmGw6xO3VHWapC+pNLZmo6yncS53UY3bmb5WZm9wliJBB1A6brgzKA4fcqiLrmJFx71r0M2zEbRDphRLUNg==",
       "files": [
         "analyzers/dotnet/cs/Microsoft.CodeAnalysis.Analyzers.dll",
         "analyzers/dotnet/cs/Microsoft.CodeAnalysis.CSharp.Analyzers.dll",
@@ -7297,7 +7297,7 @@
     },
     "Microsoft.CodeAnalysis.Common/1.1.0-rc1-20151109-01": {
       "type": "package",
-      "sha512": "gC9zpQARTjIOht1dZM5Bp0fbOKA40yh0wHBMG2psLGquche0URbfdB9i1pnCusLospEsRIrNvYl75647BcBVug==",
+      "sha512": "5eea4BzS8/ge6aVWbweZ3LxMZumN7lm1hPPjSn3iAS3yi1ozsg1aCZ+lHq2nbS/ZNT+Z3QmTcmKaQd3b4bTqeA==",
       "files": [
         "lib/net45/Microsoft.CodeAnalysis.dll",
         "lib/net45/Microsoft.CodeAnalysis.xml",
@@ -7311,7 +7311,7 @@
     },
     "Microsoft.CodeAnalysis.CSharp/1.1.0-rc1-20151109-01": {
       "type": "package",
-      "sha512": "BFhSWMMlp0xLN/ogn71ULN7N0yy/yqJf/wu63x3KjV497n+8OlyiX7ZnbaQiUeafjW5P2vLzvZH99+5s+dH3Dg==",
+      "sha512": "2u8FpEIzbjvW6kveLYDwVgrrw7rkqN123dQSMLL3aRBcNFpKL4+hJkrU5uutsVNmjrzxjQkrSKQjIw6L2yjU9w==",
       "files": [
         "lib/net45/Microsoft.CodeAnalysis.CSharp.dll",
         "lib/net45/Microsoft.CodeAnalysis.CSharp.xml",
@@ -8278,7 +8278,7 @@
     "System.Reflection.Metadata/1.1.0": {
       "type": "package",
       "serviceable": true,
-      "sha512": "RLIE4sSt2zngMLuqM6YmxBH99mTumtT4DNZE4+msfEaInUP5iCLQT+BHPl+2cjSAP1pdALyAjLB8RtCB+WGGWQ==",
+      "sha512": "a8VsRm/B0Ik1o5FumSMWmpwbG7cvIIajAYhzTTy9VB9XItByJDQHGZkQTIAdsvVJ6MI5O3uH/lb0izgQDlDIWA==",
       "files": [
         "lib/dotnet5.2/System.Reflection.Metadata.dll",
         "lib/dotnet5.2/System.Reflection.Metadata.xml",

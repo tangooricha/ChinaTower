@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Data.OleDb;
+using Microsoft.AspNet.Http;
 using Microsoft.AspNet.Mvc;
 using Newtonsoft.Json;
 
@@ -28,7 +30,7 @@ namespace ChinaTower.StationPlanning.Controllers
             "天线数量(副)"
         };
 
-        public static string[] HeaderOfB = new string[]
+        public static string[] HeaderOfD = new string[]
         {
             "项目编号",
             "站点编号",
@@ -99,7 +101,7 @@ namespace ChinaTower.StationPlanning.Controllers
             "年平均收入（万元）"
         };
 
-        public static string[] HeaderOfD = new string[]
+        public static string[] HeaderOfB = new string[]
         {
             "序号",
             "省份",
@@ -163,6 +165,7 @@ namespace ChinaTower.StationPlanning.Controllers
             "本周难点进度"
         };
 
+        [HttpGet]
         public IActionResult A(bool? raw)
         {
             var ret = DB.Forms.Where(x => x.Type == Models.FormType.储备库).OrderByDescending(x => x.Time);
@@ -172,6 +175,61 @@ namespace ChinaTower.StationPlanning.Controllers
                 return PagedView(ret);
         }
 
+        [HttpPost]
+        public IActionResult A(IFormFile file, string city)
+        {
+            var fname = Guid.NewGuid().ToString().Replace("-", "") + System.IO.Path.GetExtension(file.GetFileName());
+            var path = System.IO.Path.Combine(System.IO.Path.GetTempPath(), fname);
+            file.SaveAs(path);
+            string connStr;
+            if (System.IO.Path.GetExtension(path) == ".xls")
+                connStr = "Provider=Microsoft.Jet.OLEDB.4.0;" + "Data Source=" + path + ";" + ";Extended Properties=\"Excel 8.0;HDR=YES;IMEX=1\"";
+            else
+                connStr = "Provider=Microsoft.ACE.OLEDB.12.0;" + "Data Source=" + path + ";" + ";Extended Properties=\"Excel 12.0;HDR=YES;IMEX=1\"";
+            using (var conn = new OleDbConnection(connStr))
+            {
+                conn.Open();
+                var schemaTable = conn.GetOleDbSchemaTable(OleDbSchemaGuid.Tables, new object[] { null, null, null, "TABLE" });
+                var rows = schemaTable.Rows;
+                foreach (System.Data.DataRow r in rows)
+                {
+                    if (r["TABLE_NAME"].ToString() == "_xlnm#_FilterDatabase")
+                        continue;
+                    var cmd = new OleDbCommand($"select * from [{r["TABLE_NAME"].ToString()}]", conn);
+                    var reader = cmd.ExecuteReader();
+                    var flag = reader.Read();
+                    flag = reader.Read();
+                    flag = reader.Read();
+                    if (flag)
+                    {
+                        while (reader.Read())
+                        {
+                            try
+                            {
+                                var text = new List<string>();
+                                for (var i = 1; i <= HeaderOfA.Count(); i++)
+                                    text.Add(reader[i].ToString());
+                                DB.Forms.Add(new Models.Form
+                                {
+                                    City = city,
+                                    Content = JsonConvert.SerializeObject(text),
+                                    Time = DateTime.Now,
+                                    Type = Models.FormType.储备库
+                                });
+                            }
+                            catch (Exception e)
+                            {
+                                Console.WriteLine(e.ToString());
+                            }
+                        }
+                        DB.SaveChanges();
+                    }
+                }
+            }
+            return RedirectToAction("A", "Form", null);
+        }
+
+        [HttpGet]
         public IActionResult B(bool? raw)
         {
             var ret = DB.Forms.Where(x => x.Type == Models.FormType.在建难点库).OrderByDescending(x => x.Time);
@@ -181,6 +239,61 @@ namespace ChinaTower.StationPlanning.Controllers
                 return PagedView(ret);
         }
 
+        [HttpPost]
+        public IActionResult B(IFormFile file, string city)
+        {
+            var fname = Guid.NewGuid().ToString().Replace("-", "") + System.IO.Path.GetExtension(file.GetFileName());
+            var path = System.IO.Path.Combine(System.IO.Path.GetTempPath(), fname);
+            file.SaveAs(path);
+            string connStr;
+            if (System.IO.Path.GetExtension(path) == ".xls")
+                connStr = "Provider=Microsoft.Jet.OLEDB.4.0;" + "Data Source=" + path + ";" + ";Extended Properties=\"Excel 8.0;HDR=YES;IMEX=1\"";
+            else
+                connStr = "Provider=Microsoft.ACE.OLEDB.12.0;" + "Data Source=" + path + ";" + ";Extended Properties=\"Excel 12.0;HDR=YES;IMEX=1\"";
+            using (var conn = new OleDbConnection(connStr))
+            {
+                conn.Open();
+                var schemaTable = conn.GetOleDbSchemaTable(OleDbSchemaGuid.Tables, new object[] { null, null, null, "TABLE" });
+                var rows = schemaTable.Rows;
+                foreach (System.Data.DataRow r in rows)
+                {
+                    if (r["TABLE_NAME"].ToString() == "_xlnm#_FilterDatabase")
+                        continue;
+                    var cmd = new OleDbCommand($"select * from [{r["TABLE_NAME"].ToString()}]", conn);
+                    var reader = cmd.ExecuteReader();
+                    var flag = reader.Read();
+                    flag = reader.Read();
+                    flag = reader.Read();
+                    if (flag)
+                    {
+                        while (reader.Read())
+                        {
+                            try
+                            {
+                                var text = new List<string>();
+                                for (var i = 1; i <= HeaderOfB.Count(); i++)
+                                    text.Add(reader[i].ToString());
+                                DB.Forms.Add(new Models.Form
+                                {
+                                    City = city,
+                                    Content = JsonConvert.SerializeObject(text),
+                                    Time = DateTime.Now,
+                                    Type = Models.FormType.在建难点库
+                                });
+                            }
+                            catch (Exception e)
+                            {
+                                Console.WriteLine(e.ToString());
+                            }
+                        }
+                        DB.SaveChanges();
+                    }
+                }
+            }
+            return RedirectToAction("B", "Form", null);
+        }
+
+        [HttpGet]
         public IActionResult C(bool? raw)
         {
             var ret = DB.Forms.Where(x => x.Type == Models.FormType.存量资源).OrderByDescending(x => x.Time);
@@ -190,6 +303,7 @@ namespace ChinaTower.StationPlanning.Controllers
                 return PagedView(ret);
         }
 
+        [HttpGet]
         public IActionResult D(bool? raw)
         {
             var ret = DB.Forms.Where(x => x.Type == Models.FormType.新建站址).OrderByDescending(x => x.Time);
@@ -199,6 +313,7 @@ namespace ChinaTower.StationPlanning.Controllers
                 return PagedView(ret);
         }
 
+        [HttpGet]
         public IActionResult E(bool? raw)
         {
             var ret = DB.Forms.Where(x => x.Type == Models.FormType.潜在难点库).OrderByDescending(x => x.Time);

@@ -1,17 +1,17 @@
 ﻿@model IEnumerable<Form>
 @{
-    ViewBag.Title = "潜在难点库";
+    ViewBag.Title = "新建站址";
 }
 
 <div class="clearfix">
-    <h4>潜在难点库</h4>
+    <h4>新建站址</h4>
 </div>
 
 <div class="row">
     <div class="col-lg-8">
         <section class="panel">
             <header class="panel-heading">
-                潜在难点库 <a href="?raw=true" style="float:right">导出</a>
+                新建站址 <a href="?raw=true" style="float:right">导出</a>
             </header>
             <div class="pull-out m-t-small" style="overflow-x: auto;white-space:nowrap; text-overflow:ellipsis;">
                 <table class="table table-striped b-t text-small">
@@ -51,36 +51,75 @@
         </section>
     </div>
     <div class="col-lg-4">
-        <section class="panel">
-            <header class="panel-heading">
-                创建表单
-            </header>
-            <form asp-action="Insert" asp-controller="Form" asp-route-type="储备库" method="post">
-                <table class="edit-tower">
-                    @if (User.IsInRole("Member"))
-                    {
+        <div class="row">
+            <section class="panel">
+                <header class="panel-heading">
+                    创建表单
+                </header>
+                <form asp-action="Insert" asp-controller="Form" asp-route-type="新建站址" method="post">
+                    <table class="edit-tower">
+                        @if (User.IsInRole("Member"))
+                        {
+                            <tr>
+                                <td>
+                                    <select class="form-control" name="city">
+                                        @foreach (var x in (await User.Manager.GetClaimsAsync(User.Current)).Where(x => x.Type == "有权限访问地市数据"))
+                                        {
+                                        <!option>@x.Value</!option>
+                                        }
+                                    </select>
+                                </td>
+                            </tr>
+                        }
+                        @foreach (var x in ChinaTower.StationPlanning.Controllers.FormController.HeaderOfD)
+                        {
+                            <tr>
+                                <td><input type="text" name="text" placeholder="@x" class="form-control" /></td>
+                            </tr>
+                        }
+                    </table>
+                    <br />
+                    <input class="btn btn-primary" value="创建" type="submit" />
+                </form>
+            </section>
+        </div>
+        <div class="row">
+            <section class="panel">
+                <header class="panel-heading">
+                    导入Excel表格
+                </header>
+                <form asp-action="D" asp-controller="Form" asp-route-type="新建站址" method="post" enctype="multipart/form-data">
+                    <table class="edit-tower">
+                        @if (User.IsInRole("Member"))
+                        {
+                            <tr>
+                                <td>
+                                    <select class="form-control" name="city">
+                                        @foreach (var x in (await User.Manager.GetClaimsAsync(User.Current)).Where(x => x.Type == "有权限访问地市数据"))
+                                        {
+                                        <!option>@x.Value</!option>
+                                        }
+                                    </select>
+                                </td>
+                            </tr>
+                        }
+                        else
+                        {
+                            <tr>
+                                <td><input type="text" name="city" class="form-control" placeholder="城市" /></td>
+                            </tr>
+                        }
                         <tr>
                             <td>
-                                <select class="form-control" name="city">
-                                    @foreach (var x in (await User.Manager.GetClaimsAsync(User.Current)).Where(x => x.Type == "有权限访问地市数据"))
-                                    { 
-                                        <!option>@x.Value</!option>
-                                    }
-                                </select>
+                                <input type="file" name="file" class="form-control" />
                             </td>
                         </tr>
-                    }
-                    @foreach (var x in ChinaTower.StationPlanning.Controllers.FormController.HeaderOfD)
-                    {
-                        <tr>
-                            <td><input type="text" name="text" placeholder="@x" class="form-control" /></td>
-                        </tr>
-                    }
-                </table>
-                <br />
-                <input class="btn btn-primary" value="创建" type="submit" />
-            </form>
-        </section>
+                    </table>
+                    <br />
+                    <input class="btn btn-primary" value="导入" type="submit" />
+                </form>
+            </section>
+        </div>
     </div>
 </div>
 <form id="frmDeleteForm" asp-action="Delete" asp-controller="Form">

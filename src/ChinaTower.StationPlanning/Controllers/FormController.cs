@@ -419,7 +419,7 @@ namespace ChinaTower.StationPlanning.Controllers
         }
 
         [HttpPost]
-        public IActionResult D(IFormFile file, string city)
+        public IActionResult E(IFormFile file, string city)
         {
             var fname = Guid.NewGuid().ToString().Replace("-", "") + System.IO.Path.GetExtension(file.GetFileName());
             var path = System.IO.Path.Combine(System.IO.Path.GetTempPath(), fname);

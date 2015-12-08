@@ -1,0 +1,84 @@
+﻿@model IEnumerable<Tower>
+@{
+    ViewBag.Title = "全景分析";
+}
+<div class="clearfix">
+    <h4>全景分析</h4>
+</div>
+
+<div class="row">
+    <div class="col-lg-12">
+        <style>
+            select, input[type="text"] {
+                width: 130px !important;
+            }
+
+            .modal select, .modal input[type="text"] {
+                width: 300px !important;
+            }
+        </style>
+        <section class="panel">
+            <header class="panel-heading">
+                铁塔数据
+            </header>
+            <form asp-action="Index" asp-controller="Tower" method="get" class="row text-small" id="frmAjaxLoad">
+                <div class="col-lg-9">
+                    <p class="form-inline">
+                        <input type="text" placeholder="铁塔名称" id="txtSearchName" class="form-control" name="Name" value="@Context.Request.Query["name"]" />
+                        <select id="lstProviders" class="form-control" name="provider">
+                            <option value="">运营商</option>
+                            <!option @(Context.Request.Query["provider"] == "中国移动" ? "selected" : "")>中国移动</!option>
+                            <!option @(Context.Request.Query["provider"] == "中国电信" ? "selected" : "")>中国电信</!option>
+                            <!option @(Context.Request.Query["provider"] == "中国联通" ? "selected" : "")>中国联通</!option>
+                        </select>
+                        <select id="lstTypes" style="width:90px!important" class="form-control" name="type">
+                            <option value="">塔型</option>
+                            <!option @(Context.Request.Query["type"] == "B" ? "selected" : "")>B</!option>
+                            <!option @(Context.Request.Query["type"] == "T" ? "selected" : "")>T</!option>
+                            <!option @(Context.Request.Query["type"] == "Z" ? "selected" : "")>Z</!option>
+                        </select>
+                        <input type="text" placeholder="城市" id="txtSearchCity" class="form-control" name="city" value="@Context.Request.Query["city"]" />
+                        <input type="text" placeholder="地区" id="txtSearchDistrict" class="form-control" name="district" @Context.Request.Query["district"] />
+                        <select id="lstSearchStatus" class="form-control" name="status">
+                            <option value="">属性</option>
+                            <!option @(Context.Request.Query["type"] == "正常" ? "selected" : "")>正常</!option>
+                            <!option @(Context.Request.Query["type"] == "预选" ? "selected" : "")>预选</!option>
+                            <!option @(Context.Request.Query["type"] == "难点" ? "selected" : "")>难点</!option>
+                            <!option @(Context.Request.Query["type"] == "储备" ? "selected" : "")>储备</!option>
+                        </select>
+                    </p>
+                </div>
+                <div class="col-lg-3">
+                    <div class="input-group" style="float: right">
+                        <input type="submit" class="btn btn-primary" value="检索" />
+                        <a href="javascript:exportTowers()" class="btn btn-info">导出</a>
+                        <a href="javascript:$('#modalImportTowers').modal('show')" class="btn btn-success">导入</a>
+                        <a href="javascript:DeleteTowers()" class="btn btn-danger">批量删除</a>
+                    </div>
+                </div>
+            </form>
+            <div class="pull-out m-t-small">
+                @foreach (var x in Model)
+                {
+                    <a href="@x.Url">
+                        <div class="tower-pano-item">
+                            <img src="@Url.Action("Download", "Blob",new { id=x.BlobId})" class="tower-pano-icon" />
+                            <br />
+                            <br />
+                            @x.Name (@x.Status)
+                            <br />
+                            @x.Address
+                        </div>
+                    </a>
+                }
+            </div>
+            <footer class="panel-footer">
+                <div class="row">
+                    <div class="col-lg-12 text-right text-center-sm">
+                        @Html.MakePager("", "active", "pagination pagination-small m-t-none m-b-none")
+                    </div>
+                </div>
+            </footer>
+        </section>
+    </div>
+</div>

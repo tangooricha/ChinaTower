@@ -30,77 +30,6 @@ namespace ChinaTower.StationPlanning.Controllers
             "天线数量(副)"
         };
 
-        public static string[] HeaderOfD = new string[]
-        {
-            "项目编号",
-            "站点编号",
-            "省份",
-            "地市",
-            "区县",
-            "站点名称",
-            "站点地址",
-            "经度",
-            "纬度",
-            "归属场景",
-            "铁塔类型",
-            "铁塔高度（米）",
-            "机房类型	机房面积（平米）",
-            "电信系统数（套）",
-            "移动系统数（套）",
-            "联通系统数（套）",
-            "剩余平台数目（个）",
-            "剩余抱杆数（个）",
-            "剩余标准机架位（个）",
-            "电信需求编号",
-            "移动需求编号",
-            "联通需求编号",
-            "系统数量（套）",
-            "天线挂高（米）",
-            "天线数量(副)",
-            "需求标准机架位（个）",
-            "铁塔改造内容",
-            "机房改造内容",
-            "配套改造内容",
-            "其他改造内容",
-            "铁塔改造投资（万元）",
-            "机房改造投资（万元）",
-            "配套改造投资（万元）",
-            "其他投资（万元）",
-            "投资合计（万元）",
-            "年平均收入（万元）"
-        };
-
-        public static string[] HeaderOfC = new string[]
-        {
-            "项目编号",
-            "省份",
-            "地市",
-            "区县",
-            "站点名称",
-            "站点地址",
-            "经度",
-            "纬度",
-            "所属场景",
-            "电信需求编号",
-            "移动需求编号",
-            "联通需求编号",
-            "系统数量（套）",
-            "天线挂高（米）",
-            "天线数量(副)",
-            "铁塔类型",
-            "塔高（米）",
-            "机房类型",
-            "机房面积（平米）",
-            "外电引入方式",
-            "铁塔投资（万元）",
-            "机房投资（万元）",
-            "配套投资（万元）",
-            "外电引入投资（万元）",
-            "其他投资（万元）",
-            "总投资（万元）",
-            "年平均收入（万元）"
-        };
-
         public static string[] HeaderOfB = new string[]
         {
             "序号",
@@ -131,6 +60,63 @@ namespace ChinaTower.StationPlanning.Controllers
             "难点拟解决方案",
             "难点是否解决",
             "本周难点进度"
+        };
+
+        public static string[] HeaderOfC = new string[]
+        {
+            "项目编号",
+            "站点编号",
+            "省份",
+            "地市",
+            "区县",
+            "站点名称",
+            "站点地址",
+            "经度",
+            "纬度",
+            "归属场景",
+            "铁塔类型",
+            "铁塔高度（米）",
+            "机房类型	机房面积（平米）",
+            "电信系统数（套）",
+            "移动系统数（套）",
+            "联通系统数（套）",
+            "剩余平台数目（个）",
+            "剩余抱杆",
+            "配套改造投资（万元）",
+            "其他投资（万元）",
+            "投资合计（万元）",
+            "年平均收入（万元）"
+        };
+
+        public static string[] HeaderOfD = new string[]
+        {
+            "项目编号",
+            "省份",
+            "地市",
+            "区县",
+            "站点名称",
+            "站点地址",
+            "经度",
+            "纬度",
+            "所属场景",
+            "电信需求编号",
+            "移动需求编号",
+            "联通需求编号",
+            "系统数量（套）",
+            "天线挂高（米）",
+            "天线数量(副)",
+            "铁塔类型",
+            "塔高（米）",
+            "机房类型",
+            "机房面积（平米）",
+            "外电引入方式",
+            "铁塔投资（万元）",
+            "机房投资（万元）",
+            "配套投资（万元）",
+            "外电引入投资（万元）",
+            "其他投资（万元）",
+            "总投资（万元）",
+            "年平均收入（万元）"
         };
 
         public static string[] HeaderOfE = new string[]
@@ -271,8 +257,9 @@ namespace ChinaTower.StationPlanning.Controllers
                             try
                             {
                                 var text = new List<string>();
-                                for (var i = 1; i <= HeaderOfB.Count(); i++)
-                                    text.Add(reader[i].ToString());
+                                for (var i = 0; i <= HeaderOfB.Count(); i++)
+                                    if (i!=25)
+                                        text.Add(reader[i].ToString());
                                 DB.Forms.Add(new Models.Form
                                 {
                                     City = city,
@@ -303,6 +290,60 @@ namespace ChinaTower.StationPlanning.Controllers
                 return PagedView(ret);
         }
 
+        [HttpPost]
+        public IActionResult C(IFormFile file, string city)
+        {
+            var fname = Guid.NewGuid().ToString().Replace("-", "") + System.IO.Path.GetExtension(file.GetFileName());
+            var path = System.IO.Path.Combine(System.IO.Path.GetTempPath(), fname);
+            file.SaveAs(path);
+            string connStr;
+            if (System.IO.Path.GetExtension(path) == ".xls")
+                connStr = "Provider=Microsoft.Jet.OLEDB.4.0;" + "Data Source=" + path + ";" + ";Extended Properties=\"Excel 8.0;HDR=YES;IMEX=1\"";
+            else
+                connStr = "Provider=Microsoft.ACE.OLEDB.12.0;" + "Data Source=" + path + ";" + ";Extended Properties=\"Excel 12.0;HDR=YES;IMEX=1\"";
+            using (var conn = new OleDbConnection(connStr))
+            {
+                conn.Open();
+                var schemaTable = conn.GetOleDbSchemaTable(OleDbSchemaGuid.Tables, new object[] { null, null, null, "TABLE" });
+                var rows = schemaTable.Rows;
+                foreach (System.Data.DataRow r in rows)
+                {
+                    if (r["TABLE_NAME"].ToString() == "_xlnm#_FilterDatabase")
+                        continue;
+                    var cmd = new OleDbCommand($"select * from [{r["TABLE_NAME"].ToString()}]", conn);
+                    var reader = cmd.ExecuteReader();
+                    var flag = reader.Read();
+                    flag = reader.Read();
+                    flag = reader.Read();
+                    if (flag)
+                    {
+                        while (reader.Read())
+                        {
+                            try
+                            {
+                                var text = new List<string>();
+                                for (var i = 1; i <= HeaderOfC.Count(); i++)
+                                    text.Add(reader[i].ToString());
+                                DB.Forms.Add(new Models.Form
+                                {
+                                    City = city,
+                                    Content = JsonConvert.SerializeObject(text),
+                                    Time = DateTime.Now,
+                                    Type = Models.FormType.存量资源
+                                });
+                            }
+                            catch (Exception e)
+                            {
+                                Console.WriteLine(e.ToString());
+                            }
+                        }
+                        DB.SaveChanges();
+                    }
+                }
+            }
+            return RedirectToAction("C", "Form", null);
+        }
+
         [HttpGet]
         public IActionResult D(bool? raw)
         {
@@ -313,6 +354,60 @@ namespace ChinaTower.StationPlanning.Controllers
                 return PagedView(ret);
         }
 
+        [HttpPost]
+        public IActionResult D(IFormFile file, string city)
+        {
+            var fname = Guid.NewGuid().ToString().Replace("-", "") + System.IO.Path.GetExtension(file.GetFileName());
+            var path = System.IO.Path.Combine(System.IO.Path.GetTempPath(), fname);
+            file.SaveAs(path);
+            string connStr;
+            if (System.IO.Path.GetExtension(path) == ".xls")
+                connStr = "Provider=Microsoft.Jet.OLEDB.4.0;" + "Data Source=" + path + ";" + ";Extended Properties=\"Excel 8.0;HDR=YES;IMEX=1\"";
+            else
+                connStr = "Provider=Microsoft.ACE.OLEDB.12.0;" + "Data Source=" + path + ";" + ";Extended Properties=\"Excel 12.0;HDR=YES;IMEX=1\"";
+            using (var conn = new OleDbConnection(connStr))
+            {
+                conn.Open();
+                var schemaTable = conn.GetOleDbSchemaTable(OleDbSchemaGuid.Tables, new object[] { null, null, null, "TABLE" });
+                var rows = schemaTable.Rows;
+                foreach (System.Data.DataRow r in rows)
+                {
+                    if (r["TABLE_NAME"].ToString() == "_xlnm#_FilterDatabase")
+                        continue;
+                    var cmd = new OleDbCommand($"select * from [{r["TABLE_NAME"].ToString()}]", conn);
+                    var reader = cmd.ExecuteReader();
+                    var flag = reader.Read();
+                    flag = reader.Read();
+                    flag = reader.Read();
+                    if (flag)
+                    {
+                        while (reader.Read())
+                        {
+                            try
+                            {
+                                var text = new List<string>();
+                                for (var i = 1; i <= HeaderOfD.Count(); i++)
+                                    text.Add(reader[i].ToString());
+                                DB.Forms.Add(new Models.Form
+                                {
+                                    City = city,
+                                    Content = JsonConvert.SerializeObject(text),
+                                    Time = DateTime.Now,
+                                    Type = Models.FormType.新建站址
+                                });
+                            }
+                            catch (Exception e)
+                            {
+                                Console.WriteLine(e.ToString());
+                            }
+                        }
+                        DB.SaveChanges();
+                    }
+                }
+            }
+            return RedirectToAction("D", "Form", null);
+        }
+
         [HttpGet]
         public IActionResult E(bool? raw)
         {
@@ -321,6 +416,60 @@ namespace ChinaTower.StationPlanning.Controllers
                 return XlsView(ret.ToList(), "form.xls", "~/Views/Form/Xls.cshtml");
             else
                 return PagedView(ret);
+        }
+
+        [HttpPost]
+        public IActionResult D(IFormFile file, string city)
+        {
+            var fname = Guid.NewGuid().ToString().Replace("-", "") + System.IO.Path.GetExtension(file.GetFileName());
+            var path = System.IO.Path.Combine(System.IO.Path.GetTempPath(), fname);
+            file.SaveAs(path);
+            string connStr;
+            if (System.IO.Path.GetExtension(path) == ".xls")
+                connStr = "Provider=Microsoft.Jet.OLEDB.4.0;" + "Data Source=" + path + ";" + ";Extended Properties=\"Excel 8.0;HDR=YES;IMEX=1\"";
+            else
+                connStr = "Provider=Microsoft.ACE.OLEDB.12.0;" + "Data Source=" + path + ";" + ";Extended Properties=\"Excel 12.0;HDR=YES;IMEX=1\"";
+            using (var conn = new OleDbConnection(connStr))
+            {
+                conn.Open();
+                var schemaTable = conn.GetOleDbSchemaTable(OleDbSchemaGuid.Tables, new object[] { null, null, null, "TABLE" });
+                var rows = schemaTable.Rows;
+                foreach (System.Data.DataRow r in rows)
+                {
+                    if (r["TABLE_NAME"].ToString() == "_xlnm#_FilterDatabase")
+                        continue;
+                    var cmd = new OleDbCommand($"select * from [{r["TABLE_NAME"].ToString()}]", conn);
+                    var reader = cmd.ExecuteReader();
+                    var flag = reader.Read();
+                    flag = reader.Read();
+                    flag = reader.Read();
+                    if (flag)
+                    {
+                        while (reader.Read())
+                        {
+                            try
+                            {
+                                var text = new List<string>();
+                                for (var i = 0; i < HeaderOfE.Count(); i++)
+                                    text.Add(reader[i].ToString());
+                                DB.Forms.Add(new Models.Form
+                                {
+                                    City = city,
+                                    Content = JsonConvert.SerializeObject(text),
+                                    Time = DateTime.Now,
+                                    Type = Models.FormType.潜在难点库
+                                });
+                            }
+                            catch (Exception e)
+                            {
+                                Console.WriteLine(e.ToString());
+                            }
+                        }
+                        DB.SaveChanges();
+                    }
+                }
+            }
+            return RedirectToAction("E", "Form", null);
         }
 
         [HttpPost]

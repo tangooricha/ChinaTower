@@ -2,7 +2,8 @@
 {
     public enum TowerStatus
     {
-        正常,
+        存量宏站,
+        存量室分,
         预选,
         难点,
         储备

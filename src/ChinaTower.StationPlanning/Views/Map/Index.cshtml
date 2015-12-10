@@ -304,7 +304,9 @@
                     lock = false;
                     for (var i = 0; i < towers.length; i ++)
                     {
-                        if (!($('#chkNormal').is(':checked') && towers[i].Status == '正常' || $('#chkHard').is(':checked') && towers[i].Status == '难点' || $('#chkStock').is(':checked') && towers[i].Status == '储备' || $('#chkPlan').is(':checked') && towers[i].Name && towers[i].Status == '预选' || $('#chkSuggest').is(':checked') && !towers[i].Name && towers[i].Status == '预选'))
+                        if (!($('#chkNormal').is(':checked') && towers[i].Status == '存量宏站' || $('#chkHard').is(':checked') && towers[i].Status == '难点' || $('#chkStock').is(':checked') && towers[i].Status == '储备' || $('#chkPlan').is(':checked') && towers[i].Name && towers[i].Status == '预选' || $('#chkSuggest').is(':checked') && !towers[i].Name && towers[i].Status == '预选'))
+                            continue;
+                        if (!($('#chkShifen').is(':checked') && towers[i].Status == '存量室分' || $('#chkHard').is(':checked') && towers[i].Status == '难点' || $('#chkStock').is(':checked') && towers[i].Status == '储备' || $('#chkPlan').is(':checked') && towers[i].Name && towers[i].Status == '预选' || $('#chkSuggest').is(':checked') && !towers[i].Name && towers[i].Status == '预选'))
                             continue;
                         if (!(!towers[i].Name || $('#chkCT').is(':checked') && towers[i].Provider == '中国电信' || $('#chkCU').is(':checked') && towers[i].Provider == '中国联通' || $('#chkCM').is(':checked') && towers[i].provider == '中国移动'))
                             continue;
@@ -402,7 +404,7 @@
                 if ($('#chkShare').is(':checked') || $('#chkNewShare').is(':checked'))
                     $.getJSON('/tower/sharing', { left: left, right: right, top: top, bottom: bottom }, function (lines) {
                         for (var i = 0; i < lines.length; i++) {
-                            if (lines[i].Status == '预选' && $('#chkNewShare').is(':checked') || lines[i].Status == '正常' && $('#chkShare').is(':checked')) {
+                            if (lines[i].Status == '预选' && $('#chkNewShare').is(':checked') || lines[i].Status == '存量宏站' && $('#chkShare').is(':checked')) {
                                 var points = [];
                                 var result = GPS.wgs_to_bd(lines[i].BeginLat, lines[i].BeginLon);
                                 points.push(new BMap.Point(result.lon, result.lat));

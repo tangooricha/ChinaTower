@@ -30,19 +30,19 @@ namespace ChinaTower.StationPlanning.Controllers
                 .Select(x => new ProviderStatistics { Key = x.Key, Count = x.Count() })
                 .ToList();
             var DateStatistics = DB.Towers
-                .Where(x => x.Status == Models.TowerStatus.正常 || x.Status == Models.TowerStatus.预选)
+                .Where(x => x.Status == Models.TowerStatus.存量宏站 || x.Status == Models.TowerStatus.存量室分 || x.Status == Models.TowerStatus.预选)
                 .Where(x => x.Time > oneYear)
                 .GroupBy(x => new DateTime(x.Time.Year, x.Time.Month, 1))
-                .Select(x => new { Date = x.Key, Normal = x.Where(y => y.Status == Models.TowerStatus.正常).Count(), Pre = x.Where(y => y.Status == Models.TowerStatus.预选).Count() })
+                .Select(x => new { Date = x.Key, Normal = x.Where(y => y.Status == Models.TowerStatus.存量宏站 || y.Status == TowerStatus.存量室分).Count(), Pre = x.Where(y => y.Status == Models.TowerStatus.预选).Count() })
                 .ToList();
             ViewBag.DateStatisticsDates = DateStatistics.Select(x => x.Date).ToList();
             ViewBag.DataStatisticsNormal = Newtonsoft.Json.JsonConvert.SerializeObject(DateStatistics.Select(x => x.Normal).ToList());
             ViewBag.DataStatisticsPre = Newtonsoft.Json.JsonConvert.SerializeObject(DateStatistics.Select(x => x.Pre).ToList());
-            ViewBag.Normal = StatusStatistics.Where(x => x.Type == Models.TowerStatus.正常).SingleOrDefault() == null ? 0 : StatusStatistics.Where(x => x.Type == Models.TowerStatus.正常).SingleOrDefault().Count;
+            ViewBag.Normal = StatusStatistics.Where(x => x.Type == Models.TowerStatus.存量宏站).SingleOrDefault() == null ? 0 : StatusStatistics.Where(x => x.Type == Models.TowerStatus.存量宏站 || x.Type == Models.TowerStatus.存量室分).SingleOrDefault().Count;
             ViewBag.Store = StatusStatistics.Where(x => x.Type == Models.TowerStatus.储备).SingleOrDefault() == null ? 0 : StatusStatistics.Where(x => x.Type == Models.TowerStatus.储备).SingleOrDefault().Count;
             ViewBag.Hard = StatusStatistics.Where(x => x.Type == Models.TowerStatus.难点).SingleOrDefault() == null ? 0 : StatusStatistics.Where(x => x.Type == Models.TowerStatus.难点).SingleOrDefault().Count;
             ViewBag.Pre = StatusStatistics.Where(x => x.Type == Models.TowerStatus.预选).SingleOrDefault() == null ? 0 : StatusStatistics.Where(x => x.Type == Models.TowerStatus.预选).SingleOrDefault().Count;
-            ViewBag.NormalRatio = StatusStatistics.Where(x => x.Type == Models.TowerStatus.正常).SingleOrDefault() == null ? 0 : StatusStatistics.Where(x => x.Type == Models.TowerStatus.正常).SingleOrDefault().Count * 100 / StatusStatistics.Sum(x => x.Count);
+            ViewBag.NormalRatio = StatusStatistics.Where(x => x.Type == Models.TowerStatus.存量宏站 || x.Type == Models.TowerStatus.存量室分).SingleOrDefault() == null ? 0 : StatusStatistics.Where(x => x.Type == Models.TowerStatus.存量宏站 || x.Type == Models.TowerStatus.存量室分).SingleOrDefault().Count * 100 / StatusStatistics.Sum(x => x.Count);
             ViewBag.StoreRatio = StatusStatistics.Where(x => x.Type == Models.TowerStatus.储备).SingleOrDefault() == null ? 0 : StatusStatistics.Where(x => x.Type == Models.TowerStatus.储备).SingleOrDefault().Count * 100 / StatusStatistics.Sum(x => x.Count);
             ViewBag.HardRatio = StatusStatistics.Where(x => x.Type == Models.TowerStatus.难点).SingleOrDefault() == null ? 0 : StatusStatistics.Where(x => x.Type == Models.TowerStatus.难点).SingleOrDefault().Count * 100 / StatusStatistics.Sum(x => x.Count);
             ViewBag.PreRatio = 100 - ViewBag.NormalRatio - ViewBag.StoreRatio - ViewBag.HardRatio;

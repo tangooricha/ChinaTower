@@ -34,7 +34,8 @@
                                     <td class="td-gray">属性</td>
                                     <td>
                                         <select name="status" class="form-control">
-                                            <option value="正常">正常</option>
+                                            <option value="存量宏站">存量宏站</option>
+                                            <option value="存量室分">存量室分</option>
                                             <option value="预选">预选</option>
                                             <option value="难点">难点</option>
                                             <option value="储备">储备</option>
@@ -125,7 +126,8 @@
                                     <td class="td-gray">属性</td>
                                     <td>
                                         <select name="status" id="lstStatus" class="form-control">
-                                            <option value="正常">正常</option>
+                                            <option value="存量宏站">存量宏站</option>
+                                            <option value="存量室分">存量室分</option>
                                             <option value="预选">预选</option>
                                             <option value="难点">难点</option>
                                             <option value="储备">储备</option>
@@ -175,8 +177,9 @@
                         <input type="text" placeholder="城市" id="txtSearchCity" class="form-control" name="city" value="@Context.Request.Query["city"]" />
                         <input type="text" placeholder="地区" id="txtSearchDistrict" class="form-control" name="district" @Context.Request.Query["district"] />
                         <select id="lstSearchStatus" class="form-control" name="status">
-                            <option value="">属性</option>
-                            <!option @(Context.Request.Query["type"] == "正常" ? "selected" : "")>正常</!option>
+                            <option value="">属性</option>                            
+                            <!option @(Context.Request.Query["type"] == "存量宏站" ? "selected" : "")>存量宏站</!option>                            
+                            <!option @(Context.Request.Query["type"] == "存量室分" ? "selected" : "")>存量室分</!option>
                             <!option @(Context.Request.Query["type"] == "预选" ? "selected" : "")>预选</!option>
                             <!option @(Context.Request.Query["type"] == "难点" ? "selected" : "")>难点</!option>
                             <!option @(Context.Request.Query["type"] == "储备" ? "selected" : "")>储备</!option>

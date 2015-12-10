@@ -65,7 +65,8 @@
                                 路测信号
                             </div>
                         </li>
-                        <li><div class="nav-chk"><input id="chkNormal" checked type="checkbox" onclick="BuildOverlays()" /> 正常铁塔</div></li>
+                        <li><div class="nav-chk"><input id="chkNormal" checked type="checkbox" onclick="BuildOverlays()" /> 存量宏站</div></li>
+                        <li><div class="nav-chk"><input id="chkShifen" checked type="checkbox" onclick="BuildOverlays()" /> 存量室分</div></li>
                         <li><div class="nav-chk"><input id="chkStock" type="checkbox" onclick="BuildOverlays()" /> 储备铁塔</div></li>
                         <li><div class="nav-chk"><input id="chkHard" type="checkbox" onclick="BuildOverlays()" /> 难点铁塔</div></li>
                         <li><div class="nav-chk"><input id="chkPlan" checked type="checkbox" onclick="BuildOverlays()" /> 预选铁塔</div></li>
@@ -97,13 +98,13 @@
             <li @(ViewContext.RouteData.Values["controller"].ToString() == "Pavement" ? new HtmlString("class=\"active\"") : HtmlString.Empty)><a asp-action="Index" asp-controller="Pavement"><i class="fa-car fa fa-lg"></i>路测分析</a></li>
             <li @(ViewContext.RouteData.Values["controller"].ToString() == "Pano" ? new HtmlString("class=\"active\"") : HtmlString.Empty)><a asp-action="Index" asp-controller="Pano"><i class="fa-camera fa fa-lg"></i>实景勘察</a></li>
             <li class="dropdown-submenu @(ViewContext.RouteData.Values["controller"].ToString() == "Form" ? "active" : "")">
-                <a href="#"><i class="fa-edit fa fa-lg"></i>表单信息</a>
+                <a href="#"><i class="fa-edit fa fa-lg"></i>资源库表</a>
                 <ul class="dropdown-menu">
-                    <li><a asp-controller="Form" asp-action="A">储备库</a></li>
+                    <li><a asp-controller="Form" asp-action="A">站址储备库</a></li>
                     <li><a asp-controller="Form" asp-action="B">在建难点库</a></li>
+                    <li><a asp-controller="Form" asp-action="E">潜在难点库</a></li>
                     <li><a asp-controller="Form" asp-action="C">存量资源库</a></li>
                     <li><a asp-controller="Form" asp-action="D">新建站址库</a></li>
-                    <li><a asp-controller="Form" asp-action="E">潜在难点库</a></li>
                 </ul>
             </li>
             @if (User.AnyRoles("Root, Master"))

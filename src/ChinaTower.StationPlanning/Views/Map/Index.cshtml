@@ -276,7 +276,7 @@
             });
             if (@(Context.Request.Query.ContainsKey("lon") ? "true" : "false")) {
                 var center = GPS.wgs_to_bd('@Context.Request.Query["lat"]', '@Context.Request.Query["lon"]');
-            map.centerAndZoom(new BMap.Point(center.lon, center.lat), 17);
+                map.centerAndZoom(new BMap.Point(center.lon, center.lat), 17);
             }
 
             map.addEventListener("dragend", function () {
@@ -304,11 +304,9 @@
                     lock = false;
                     for (var i = 0; i < towers.length; i ++)
                     {
-                        if (!($('#chkNormal').is(':checked') && towers[i].Status == '存量宏站' || $('#chkHard').is(':checked') && towers[i].Status == '难点' || $('#chkStock').is(':checked') && towers[i].Status == '储备' || $('#chkPlan').is(':checked') && towers[i].Name && towers[i].Status == '预选' || $('#chkSuggest').is(':checked') && !towers[i].Name && towers[i].Status == '预选'))
+                        if (!($('#chkNormal').is(':checked') && towers[i].Status == '存量宏站' || $('#chkShifen').is(':checked') && towers[i].Status == '存量室分' ||  $('#chkHard').is(':checked') && towers[i].Status == '难点' || $('#chkStock').is(':checked') && towers[i].Status == '储备' || $('#chkPlan').is(':checked') && towers[i].Name && towers[i].Status == '预选' || $('#chkSuggest').is(':checked') && !towers[i].Name && towers[i].Status == '预选'))
                             continue;
-                        if (!($('#chkShifen').is(':checked') && towers[i].Status == '存量室分' || $('#chkHard').is(':checked') && towers[i].Status == '难点' || $('#chkStock').is(':checked') && towers[i].Status == '储备' || $('#chkPlan').is(':checked') && towers[i].Name && towers[i].Status == '预选' || $('#chkSuggest').is(':checked') && !towers[i].Name && towers[i].Status == '预选'))
-                            continue;
-                        if (!(!towers[i].Name || $('#chkCT').is(':checked') && towers[i].Provider == '中国电信' || $('#chkCU').is(':checked') && towers[i].Provider == '中国联通' || $('#chkCM').is(':checked') && towers[i].provider == '中国移动'))
+                        if (!(!towers[i].Name || $('#chkCT').is(':checked') && towers[i].Provider == '中国电信' || $('#chkCU').is(':checked') && towers[i].Provider == '中国联通' || $('#chkCM').is(':checked') && towers[i].Provider == '中国移动'))
                             continue;
                         var pos = GPS.wgs_to_bd(towers[i].Lat, towers[i].Lon);
                         var pt = new BMap.Point(pos.lon, pos.lat);

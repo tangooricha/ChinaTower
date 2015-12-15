@@ -392,9 +392,9 @@
                             points.push(new BMap.Point(result.lon, result.lat));
                             result = GPS.wgs_to_bd(lines[i].EndLat, lines[i].EndLon);
                             points.push(new BMap.Point(result.lon, result.lat));
-                            var color = "#00ff00";
+                            var color = "#ff0000";
                             if (lines[i].Color == 1) color = "#fff000";
-                            if (lines[i].Color == 2) color = "#ff0000";
+                            if (lines[i].Color == 2) color = "#00ff00";
                             var polyline = new BMap.Polyline(points, {strokeColor:color, strokeWeight:5, strokeOpacity:1});
                             map.addOverlay(polyline);
                         }

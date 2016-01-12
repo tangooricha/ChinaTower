@@ -31,6 +31,14 @@ namespace ChinaTower.StationPlanning.Controllers
                 towers = towers.Where(x => x.Status == status.Value);
             if (provider.HasValue)
                 towers = towers.Where(x => x.Provider == provider.Value);
+            if (User.IsInRole("Member"))
+            {
+                var claims = User.Claims
+                         .Where(x => x.Type == "有权限访问地市数据")
+                         .Select(x => x.Value)
+                         .ToList();
+                towers = towers.Where(x => claims.Contains(x.City));
+            }
             return PagedView(towers);
         }
 
@@ -43,6 +51,14 @@ namespace ChinaTower.StationPlanning.Controllers
                 towers = towers.Where(x => x.City.Contains(city) || city.Contains(x.City));
             if (!string.IsNullOrEmpty(district))
                 towers = towers.Where(x => x.District.Contains(district) || district.Contains(x.District));
+            if (User.IsInRole("Member"))
+            {
+                var claims = User.Claims
+                         .Where(x => x.Type == "有权限访问地市数据")
+                         .Select(x => x.Value)
+                         .ToList();
+                towers = towers.Where(x => claims.Contains(x.City));
+            }
             if (type.HasValue)
                 towers = towers.Where(x => x.Type == type.Value);
             if (status.HasValue)
@@ -63,6 +79,14 @@ namespace ChinaTower.StationPlanning.Controllers
                 towers = towers.Where(x => x.Lat <= top.Value);
             if (bottom.HasValue)
                 towers = towers.Where(x => x.Lat >= bottom.Value);
+            if (User.IsInRole("Member"))
+            {
+                var claims = User.Claims
+                         .Where(x => x.Type == "有权限访问地市数据")
+                         .Select(x => x.Value)
+                         .ToList();
+                towers = towers.Where(x => claims.Contains(x.City));
+            }
             return Json(towers.ToList());
         }
 

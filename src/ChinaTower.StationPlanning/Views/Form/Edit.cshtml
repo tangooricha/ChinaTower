@@ -26,17 +26,29 @@
                                 {
                                     <input type="text" class="form-control" name="text" placeholder="@ChinaTower.StationPlanning.Controllers.FormController.HeaderOfB[i++]" value="@x" />
                                 }
-                                else if (Model.Type == FormType.在建难点库)
+                                else if (Model.Type == FormType.存量资源)
                                 {
                                     <input type="text" class="form-control" name="text" placeholder="@ChinaTower.StationPlanning.Controllers.FormController.HeaderOfC[i++]" value="@x" />
                                 }
-                                else if (Model.Type == FormType.在建难点库)
+                                else if (Model.Type == FormType.新建站址)
                                 {
                                     <input type="text" class="form-control" name="text" placeholder="@ChinaTower.StationPlanning.Controllers.FormController.HeaderOfD[i++]" value="@x" />
                                 }
-                                else
+                                else if (Model.Type == FormType.潜在难点库)
                                 {
                                     <input type="text" class="form-control" name="text" placeholder="@ChinaTower.StationPlanning.Controllers.FormController.HeaderOfE[i++]" value="@x" />
+                                }
+                                else if (Model.Type == FormType.疑难站点库)
+                                {
+                                    <input type="text" class="form-control" name="text" placeholder="@ChinaTower.StationPlanning.Controllers.FormController.HeaderOfF[i++]" value="@x" />
+                                }
+                                else if (Model.Type == FormType.疑难站址档案)
+                                {
+                                    <input type="text" class="form-control" name="text" placeholder="@ChinaTower.StationPlanning.Controllers.FormController.HeaderOfG1[i++]" value="@x" />
+                                }
+                                else
+                                {
+                                    <input type="text" class="form-control" name="text" placeholder="@ChinaTower.StationPlanning.Controllers.FormController.HeaderOfG2[i++]" value="@x" />
                                 }
                             </td>
                         </tr>

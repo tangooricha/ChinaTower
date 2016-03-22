@@ -9,37 +9,58 @@
         var type = Model.First().Type;
         <tr>
             @if (type == FormType.储备库)
+            {
+                @foreach (var x in ChinaTower.StationPlanning.Controllers.FormController.HeaderOfA)
                 {
-                @foreach (var x in ChinaTower.StationPlanning.Controllers.FormController.HeaderOfA)
-                    {
                     <td>@x</td>
                 }
             }
             else if (type == FormType.在建难点库)
             {
-                @foreach (var x in ChinaTower.StationPlanning.Controllers.FormController.HeaderOfA)
-                    {
+                @foreach (var x in ChinaTower.StationPlanning.Controllers.FormController.HeaderOfB)
+                {
                     <td>@x</td>
                 }
             }
             else if (type == FormType.在建难点库)
             {
-                @foreach (var x in ChinaTower.StationPlanning.Controllers.FormController.HeaderOfA)
-                    {
+                @foreach (var x in ChinaTower.StationPlanning.Controllers.FormController.HeaderOfC)
+                {
                     <td>@x</td>
                 }
             }
             else if (type == FormType.在建难点库)
             {
-                @foreach (var x in ChinaTower.StationPlanning.Controllers.FormController.HeaderOfA)
-                    {
+                @foreach (var x in ChinaTower.StationPlanning.Controllers.FormController.HeaderOfD)
+                {
+                    <td>@x</td>
+                }
+            }
+            else if (type == FormType.潜在难点库)
+            {
+                @foreach (var x in ChinaTower.StationPlanning.Controllers.FormController.HeaderOfE)
+                {
+                    <td>@x</td>
+                }
+            }
+            else if (type == FormType.疑难站点库)
+            {
+                @foreach (var x in ChinaTower.StationPlanning.Controllers.FormController.HeaderOfF)
+                {
+                    <td>@x</td>
+                }
+            }
+            else if (type == FormType.疑难站址档案)
+            {
+                @foreach (var x in ChinaTower.StationPlanning.Controllers.FormController.HeaderOfG1)
+                {
                     <td>@x</td>
                 }
             }
             else
             {
-                @foreach (var x in ChinaTower.StationPlanning.Controllers.FormController.HeaderOfA)
-                    {
+                @foreach (var x in ChinaTower.StationPlanning.Controllers.FormController.HeaderOfG2)
+                {
                     <td>@x</td>
                 }
             }

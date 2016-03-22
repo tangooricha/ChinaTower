@@ -14,7 +14,10 @@ namespace ChinaTower.StationPlanning.Models
         存量资源,
         新建站址,
         潜在难点库,
-        在建难点库
+        在建难点库,
+        疑难站点库,
+        疑难站址档案,
+        疑难站址档案2
     }
 
     public class Form
@@ -35,5 +38,12 @@ namespace ChinaTower.StationPlanning.Models
         {
             get { return JsonConvert.DeserializeObject<string[]>(Content); }
         }
+
+        [ForeignKey("Parent")]
+        public Guid? ParentId { get; set; }
+
+        public virtual Form Parent { get; set; }
+
+        public virtual ICollection<Form> Children { get; set; } = new List<Form>();
     }
 }
